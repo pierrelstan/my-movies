@@ -1,36 +1,60 @@
 import React from 'react';
-import { View, Text, Image, SafeAreaView, ScrollView } from 'react-native';
+import { View, Image, SafeAreaView, FlatList } from 'react-native';
 import styled from 'styled-components';
 import Constants from 'expo-constants';
 
+const Item = ({ name, image }) => (
+  <View
+    style={{
+      margin: 0,
+      padding: 0,
+    }}
+  >
+    <View
+      style={{
+        margin: 12,
+        padding: 0,
+        borderRadius: 150,
+        borderColor: '#e3e3',
+        borderWidth: 2,
+      }}
+    >
+      <Image
+        source={image}
+        style={{
+          width: 100,
+          height: 100,
+          padding: 0,
+          margin: 0,
+          borderRadius: 50,
+        }}
+      />
+    </View>
+  </View>
+);
+
 export default function ListItems() {
+  const renderItem = ({ item }) => <Item name={item.name} image={item.image} />;
+
   return (
     <SafeAreaView>
-      <View>
-        <ScrollView
-          style={{
-            marginHorizontal: 1,
-            flexGrow: 1,
-            marginBottom: 170,
-          }}
+      <View
+        style={{
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-        >
-          {data.map(({ name, image, id }) => (
-            <View key={id}>
-              <Text>{name}</Text>
-              <View>
-                <Image
-                  source={image}
-                  style={{
-                    width: 200,
-                    height: 200,
-                  }}
-                />
-              </View>
-            </View>
-          ))}
-        </ScrollView>
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          style={{
+            margin: 0,
+            padding: 0,
+          }}
+        />
       </View>
     </SafeAreaView>
   );
@@ -50,6 +74,16 @@ let data = [
   {
     id: 2,
     name: 'Product 3',
+    image: require('../assets/bg_2.png'),
+  },
+  {
+    id: 3,
+    name: 'Product 4',
+    image: require('../assets/bg_2.png'),
+  },
+  {
+    id: 4,
+    name: 'Product 5',
     image: require('../assets/bg_2.png'),
   },
 ];
