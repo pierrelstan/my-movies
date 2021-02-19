@@ -12,9 +12,14 @@ export default function HomeScreen() {
       <Header />
       <SubHeader />
       {/* <BackgroundImage /> */}
-      <Text>Trending Now</Text>
+      <Title>Trending Now</Title>
       <ListItems />
       <StatusBar style='dark' statusBarStyle='auto' />
     </View>
   );
 }
+
+const Title = styled.Text`
+  font-size: 30px;
+  margin: 4px;
+`;
