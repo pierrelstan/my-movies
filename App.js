@@ -1,8 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-
+import { Provider } from 'react-redux';
 import BottomNavigation from './Navigations/BottomNavigation';
-
+import store from './redux/store/store';
+console.log(store.getState());
 export default function App() {
-  return <BottomNavigation />;
+  return (
+    <Provider store={store}>
+      <BottomNavigation />
+    </Provider>
+  );
 }
