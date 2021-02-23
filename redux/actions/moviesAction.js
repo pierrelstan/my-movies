@@ -5,7 +5,7 @@ export function getMovies(page = 0) {
   return function (dispatch) {
     const url = `https://api.themoviedb.org/3/movie/popular?api_key=${
       process.env.API_TOKEN
-    }&language=fr&page=${page + 1}`;
+    }&language=en-US&page=${page + 1}`;
     return axios.get(url).then((movies) => {
       dispatch({
         type: GET_MOVIES,
