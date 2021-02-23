@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Image,
   SafeAreaView,
   FlatList,
   Animated,
@@ -12,18 +11,16 @@ import Constants from 'expo-constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { OpenItem, CloseItem } from '../redux/actions/openitemAction';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { getItemModal } from '../redux/actions/itemModalAction';
 
-const Item = ({ name, image, id }) => {
+const Item = ({ name, image, id, description }) => {
   const dispatch = useDispatch();
-  const TopAnim = React.useRef(new Animated.Value(1)).current;
-  const { action } = useSelector((state) => ({
-    action: state.openitem.action,
-  }));
-  const ToggleOpenItem = () => {
-    console.log(id);
 
+  const ToggleOpenItem = () => {
     dispatch(OpenItem());
+    dispatch(getItemModal(id, image, description));
   };
+
   return (
     <View
       style={{
@@ -31,43 +28,32 @@ const Item = ({ name, image, id }) => {
         padding: 0,
       }}
     >
-      <View
-        style={{
-          margin: 12,
-          padding: 0,
-          borderRadius: 150,
-          borderColor: '#e3e3',
-          borderWidth: 2,
-        }}
-      >
+      <ContainerImage>
         <TouchableOpacity onPress={() => ToggleOpenItem()}>
-          <Image
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${image}` }}
-            style={{
-              width: 150,
-              height: 150,
-              padding: 0,
-              margin: 0,
-              borderRadius: 150,
-            }}
-          />
+          <Image source={{ uri: `https://image.tmdb.org/t/p/w500/${image}` }} />
         </TouchableOpacity>
-      </View>
+      </ContainerImage>
     </View>
   );
 };
-
-export default function ListItems({ movies }) {
-  const renderItem = ({ item }) => (
-    <Item name={item.name} image={item.poster_path} id={item.id} />
+const renderItem = ({ item }) => {
+  return (
+    <Item
+      name={item.name}
+      image={item.poster_path}
+      id={item.id}
+      description={item.overview}
+    />
   );
-
+};
+export default function ListItems({ movies }) {
   return (
     <SafeAreaView>
       <View
         style={{
           margin: 0,
           padding: 0,
+          flex: 1,
         }}
       >
         <FlatList
@@ -76,6 +62,7 @@ export default function ListItems({ movies }) {
           data={movies}
           renderItem={renderItem}
           onEndReachedThreshold={0.5}
+          keyExtractor={(item) => item.id.toString()}
           keyExtractor={(item) => item.id.toString()}
           style={{
             margin: 0,
@@ -86,3 +73,14 @@ export default function ListItems({ movies }) {
     </SafeAreaView>
   );
 }
+
+const Image = styled.Image`
+  width: 100px;
+  height: 150px;
+  padding: 0;
+  margin: 0;
+  border-radius: 2px;
+`;
+const ContainerImage = styled.View`
+  margin: 5px;
+`;
