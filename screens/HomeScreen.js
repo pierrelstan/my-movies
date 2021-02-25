@@ -8,22 +8,19 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Constants from 'expo-constants';
 import Header from '../components/Header';
 import ListItems from '../components/ListItems';
 import SubHeader from '../components/SubHeader';
 import { getMovies } from '../redux/actions/moviesAction';
 import { getTrendingMovies } from '../redux/actions/trendingMoviesAction';
 import { getUpcomingMovies } from '../redux/actions/upcomingMoviesAction';
-import { OpenItem, CloseItem } from '../redux/actions/moviesAction';
 import Item from '../components/Item';
-import Hero from '../components/Hero';
+import CarouseHero from '../components/Carousel';
 
 const window = Dimensions.get('window');
-const screen = Dimensions.get('screen');
 let w;
-if (screen.width >= 320) {
-  w = screen.height / 10;
+if (window.width >= 320) {
+  w = window.height / 2;
 }
 
 export default function HomeScreen() {
@@ -35,9 +32,17 @@ export default function HomeScreen() {
     action: state.action,
   }));
   useEffect(() => {
-    dispatch(getMovies());
-    dispatch(getTrendingMovies());
-    dispatch(getUpcomingMovies());
+    let mounted = true;
+    if (mounted) {
+      Promise.all([
+        dispatch(getMovies()),
+        dispatch(getTrendingMovies()),
+        dispatch(getUpcomingMovies()),
+      ]);
+    }
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (
@@ -49,17 +54,25 @@ export default function HomeScreen() {
       <Item />
       <Header />
       <SubHeader />
-      <ScrollView style={{ marginBottom: w }}>
-        <Hero />
-        <View>
-          <Title>Trending Now</Title>
-          <ListItems movies={trendingMovies} />
-          <Title>Most Popular</Title>
-          <ListItems movies={movies} />
-          <Title>Upcoming Movies</Title>
-          <ListItems movies={upcomingMovies} />
-        </View>
-      </ScrollView>
+      <SafeAreaView>
+        <ScrollView
+          contentContainerStyle={{
+            backgroundColor: 'lightgrey',
+            paddingBottom: 180,
+            paddingTop: 10,
+          }}
+        >
+          <CarouseHero />
+          <View>
+            <Title>Trending Now</Title>
+            <ListItems movies={trendingMovies} />
+            <Title>Most Popular</Title>
+            <ListItems movies={movies} />
+            <Title>Upcoming Movies</Title>
+            <ListItems movies={upcomingMovies} />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
       <StatusBar style='dark' statusBarStyle='auto' />
     </View>
   );
