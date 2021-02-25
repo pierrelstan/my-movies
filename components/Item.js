@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { OpenItem, CloseItem } from '../redux/actions/openitemAction';
@@ -17,30 +17,39 @@ const ScreenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 export default function Item() {
+  const navigation = useNavigation();
+
   const { action, item } = useSelector((state) => ({
     action: state.openitem.action,
     item: state.item,
   }));
   const dispatch = useDispatch();
-
   const TopAnim = useRef(new Animated.Value(ScreenHeight)).current;
 
   useEffect(() => {
-    if (action == 'OPEN_ITEM') {
-      Animated.spring(TopAnim, {
-        toValue: Math.round(ScreenHeight) / 2.3,
-        duration: 50,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.spring(TopAnim, {
-        toValue: ScreenHeight,
-        useNativeDriver: true,
-      }).start();
+    let mounted = true;
+    if (mounted) {
+      if (action == 'OPEN_ITEM') {
+        Animated.spring(TopAnim, {
+          toValue: Math.round(ScreenHeight) / 2.3,
+          useNativeDriver: true,
+        }).start();
+      } else {
+        Animated.spring(TopAnim, {
+          toValue: ScreenHeight,
+          useNativeDriver: true,
+        }).start();
+      }
     }
+    return () => {
+      mounted = false;
+    };
   }, [action]);
   const toggleClose = () => {
     dispatch(CloseItem());
+  };
+  const handlePreviewVideo = (id) => {
+    navigation.navigate('Trailer', { id: id });
   };
   return (
     <AnimatedContainer style={{ transform: [{ translateY: TopAnim }] }}>
@@ -87,16 +96,18 @@ export default function Item() {
           </View>
 
           <WrapperIcons>
-            <View>
+            <TouchableOpacity onPress={() => handlePreviewVideo(item.id)}>
               <Button>
                 <Ionicons name='play' size={24} color='#333' />
                 <ButtonText>Play</ButtonText>
               </Button>
-            </View>
-            <ContainerIcons>
-              <Feather name='play' size={24} color='#fff' />
-              <TextIcon> Review</TextIcon>
-            </ContainerIcons>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handlePreviewVideo(item.id)}>
+              <ContainerIcons>
+                <Feather name='play' size={24} color='#fff' />
+                <TextIcon> Review</TextIcon>
+              </ContainerIcons>
+            </TouchableOpacity>
             <ContainerIcons>
               <Feather name='info' size={24} color='#fff' />
               <TextIcon>Details &amp; More</TextIcon>
