@@ -5,8 +5,10 @@ import upcomingMovies from './upcomingMoviesReducer';
 import openitem from './openitemReducer';
 import lastMovie from './latestMovieReducer';
 import item from './itemModalReducer';
+import movie from './movieReducer';
 
 const allReducers = combineReducers({
+  movie: movie,
   item: item,
   lastMovie: lastMovie,
   openitem: openitem,
