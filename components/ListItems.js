@@ -13,7 +13,7 @@ import { OpenItem, CloseItem } from '../redux/actions/openitemAction';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getItemModal } from '../redux/actions/itemModalAction';
 
-const Item = ({ name, image, id, description }) => {
+const Item = ({ image, id, description }) => {
   const dispatch = useDispatch();
 
   const ToggleOpenItem = () => {
@@ -60,6 +60,7 @@ export default function ListItems({ movies }) {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={movies}
+          initialNumToRender={10}
           renderItem={renderItem}
           onEndReachedThreshold={0.5}
           keyExtractor={(item) => item.id.toString()}
