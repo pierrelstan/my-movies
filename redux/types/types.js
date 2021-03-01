@@ -8,3 +8,4 @@ export const CLOSE_ITEM = 'CLOSE_ITEM';
 export const GET_LATEST_MOVIE = 'GET_LASTEST_MOVIE';
 export const GET_ITEM_MODAL = 'GET_ITEM_MODAL';
 export const GET_MOVIE = 'GET_MOVIE';
+export const GET_SEARCH_MOVIES = 'GET_SEARCH_MOVIES ';
