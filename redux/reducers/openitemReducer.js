@@ -16,6 +16,9 @@ export default function (state = initialState, action) {
         ...state,
         action: 'CLOSE_ITEM',
       };
+    case 'RESET': {
+      return initialState;
+    }
 
     default:
       return state;
