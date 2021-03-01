@@ -12,6 +12,10 @@ export default function (state = initialState, action) {
         movie: [...action.movie],
       };
 
+    case 'RESET': {
+      return initialState;
+    }
+
     default:
       return state;
   }
