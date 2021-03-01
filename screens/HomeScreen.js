@@ -6,16 +6,14 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import styled from 'styled-components';
-import Header from '../components/Header';
-import ListItems from '../components/ListItems';
-import SubHeader from '../components/SubHeader';
-import { getMovies } from '../redux/actions/moviesAction';
-import { getTrendingMovies } from '../redux/actions/trendingMoviesAction';
-import { getUpcomingMovies } from '../redux/actions/upcomingMoviesAction';
-import Item from '../components/Item';
+import ItemMemo from '../components/Item';
 import CarouseHero from '../components/Carousel';
+import TrendingMovies from '../components/TrendingMovies';
+import MostPopularMovies from '../components/MostPopularMovies';
+import UpcomingMovies from '../components/UpcomingMovies';
+import Header from '../components/Header';
 
 const window = Dimensions.get('window');
 let w;
@@ -24,52 +22,40 @@ if (window.width >= 320) {
 }
 
 export default function HomeScreen() {
-  const dispatch = useDispatch();
-  const { movies, trendingMovies, upcomingMovies } = useSelector((state) => ({
-    movies: state.movies.movies,
-    trendingMovies: state.trendingMovies.trendingMovies,
-    upcomingMovies: state.upcomingMovies.upcomingMovies,
-    action: state.action,
-  }));
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      Promise.all([
-        dispatch(getMovies()),
-        dispatch(getTrendingMovies()),
-        dispatch(getUpcomingMovies()),
-      ]);
+    async function changeScreenOrientation() {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT,
+      );
     }
-    return () => {
-      mounted = false;
-    };
+    changeScreenOrientation();
   }, []);
-
   return (
     <View
       style={{
         backgroundColor: '#E3EDF7',
       }}
     >
-      <Item />
       <Header />
-      <SubHeader />
+      <ItemMemo />
+
       <SafeAreaView>
         <ScrollView
           contentContainerStyle={{
             backgroundColor: 'lightgrey',
-            paddingBottom: 180,
+            paddingBottom: 80,
             paddingTop: 10,
           }}
+          // onScroll={() => {}}
         >
           <CarouseHero />
           <View>
             <Title>Trending Now</Title>
-            <ListItems movies={trendingMovies} />
+            <TrendingMovies />
             <Title>Most Popular</Title>
-            <ListItems movies={movies} />
+            <MostPopularMovies />
             <Title>Upcoming Movies</Title>
-            <ListItems movies={upcomingMovies} />
+            <UpcomingMovies />
           </View>
         </ScrollView>
       </SafeAreaView>
