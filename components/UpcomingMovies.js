@@ -25,7 +25,7 @@ export default function UpcomingMovies() {
       axiosService.isCancel = axios.isCancel();
     };
   }, []);
-
+  // const memoizeRenderItem = React.useMemo(() => renderItem);
   return (
     <View>
       <FlatList
@@ -37,11 +37,6 @@ export default function UpcomingMovies() {
         onEndReachedThreshold={0.2}
         initialNumToRender={10}
         refreshing={true}
-        onEndReached={() => {
-          if (page < totalPages) {
-            return dispatch(getUpcomingMovies());
-          }
-        }}
         style={{
           margin: 0,
           padding: 0,
