@@ -6,8 +6,9 @@ import openitem from './openitemReducer';
 import lastMovie from './latestMovieReducer';
 import item from './itemModalReducer';
 import movie from './movieReducer';
-
+import searchMovies from './searchMoviesReducer';
 const allReducers = combineReducers({
+  searchMovies: searchMovies,
   movie: movie,
   item: item,
   lastMovie: lastMovie,
