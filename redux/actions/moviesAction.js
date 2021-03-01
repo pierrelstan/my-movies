@@ -1,12 +1,9 @@
-import axios from 'axios';
+import WebAPI from '../../assets/ServicesAxios/service';
 import { GET_MOVIES } from '../types/types';
 
 export function getMovies(page = 0) {
   return function (dispatch) {
-    const url = `https://api.themoviedb.org/3/movie/popular?api_key=${
-      process.env.API_TOKEN
-    }&language=en-US&page=${page + 1}`;
-    return axios.get(url).then((movies) => {
+    return WebAPI.getMostPopularMovies(page).then((movies) => {
       dispatch({
         type: GET_MOVIES,
         movies: [...movies.data.results],
