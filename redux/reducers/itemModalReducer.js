@@ -4,6 +4,10 @@ const initialState = {
   id: '',
   image: '',
   description: '',
+  title: '',
+  voteCount: '',
+  voteAverage: '',
+  dateRelease: '',
 };
 
 export default function (state = initialState, action) {
@@ -14,7 +18,14 @@ export default function (state = initialState, action) {
         id: action.id,
         image: action.image,
         description: action.description,
+        title: action.title,
+        voteCount: action.voteCount,
+        voteAverage: action.voteAverage,
+        dateRelease: action.dateRelease,
       };
+    case 'RESET': {
+      return initialState;
+    }
 
     default:
       return state;
