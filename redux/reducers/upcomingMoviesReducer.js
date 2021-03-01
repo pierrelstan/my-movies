@@ -12,8 +12,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         upcomingMovies: [...action.upcomingMovies],
+        page: action.page,
+        totalPages: action.totalPages,
       };
 
+    case 'RESET': {
+      return initialState;
+    }
     default:
       return state;
   }
