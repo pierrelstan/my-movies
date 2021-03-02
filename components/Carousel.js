@@ -13,15 +13,34 @@ import { OpenItem } from '../redux/actions/openitemAction';
 import { getItemModal } from '../redux/actions/itemModalAction';
 
 const { width: screenWidth } = Dimensions.get('window');
-const Item = ({ image, id, description, parallaxProps }) => {
+const Item = ({
+  id,
+  image,
+  description,
+  title,
+  voteCount,
+  voteAverage,
+  dateRelease,
+  parallaxProps,
+}) => {
   const dispatch = useDispatch();
   const ToggleOpenItem = () => {
     dispatch(OpenItem());
-    dispatch(getItemModal(id, image, description));
+    dispatch(
+      getItemModal(
+        id,
+        image,
+        description,
+        title,
+        voteCount,
+        voteAverage,
+        dateRelease,
+      ),
+    );
   };
   return (
     <TouchableOpacity onPress={() => ToggleOpenItem()}>
-      <View style={styles.item} key={id}>
+      <View style={styles.item}>
         <ParallaxImage
           source={{
             uri: `https://image.tmdb.org/t/p/w500/${image}`,
@@ -36,35 +55,29 @@ const Item = ({ image, id, description, parallaxProps }) => {
   );
 };
 const CarouselHero = () => {
-  const [entries, setEntries] = useState([]);
   const carouselRef = useRef(null);
 
   const { movies } = useSelector((state) => ({
     movies: state.upcomingMovies.upcomingMovies,
   }));
 
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      setEntries(movies);
-    }
-    return () => {
-      mounted = false;
-    };
-  }, [movies]);
+  // const renderItem = React.useMemo(() => Itemrender, [movies]);
 
   const renderItem = ({ item }, parallaxProps) => {
     return (
       <Item
-        name={item.name}
+        key={item.id}
+        title={item.title}
         image={item.poster_path}
         id={item.id}
         description={item.overview}
+        voteAverage={item.vote_average}
+        voteCount={item.vote_count}
+        dateRelease={item.release_date}
         parallaxProps={parallaxProps}
       />
     );
   };
-
   return (
     <View style={styles.container}>
       <Carousel
@@ -72,10 +85,11 @@ const CarouselHero = () => {
         sliderWidth={screenWidth}
         sliderHeight={screenWidth}
         itemWidth={screenWidth - 100}
-        data={entries}
+        data={movies}
         renderItem={renderItem}
         hasParallaxImages={true}
         layout={'default'}
+        useScrollView={true}
       />
     </View>
   );
