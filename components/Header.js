@@ -1,39 +1,38 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Constants from 'expo-constants';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useFonts } from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function Header() {
+  const [loaded] = useFonts({
+    Monoton: require('../assets/fonts/Monoton-Regular.ttf'),
+  });
+
   return (
     <Container>
       <Main>
-        <Title>Lo</Title>
+        <Title>lo</Title>
       </Main>
-      <Nav>
-        <List>
-          <Ionicons name='search' size={24} color='#fff' />
-        </List>
-        <List>
-          <FontAwesome5 name='user-circle' size={24} color='#fff' />
-        </List>
-      </Nav>
     </Container>
   );
 }
 const Container = styled.View`
-  height: 40px;
+  height: 60px;
   background-color: #333;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 `;
 const Main = styled.View`
   justify-content: flex-end;
   align-items: center;
 `;
 const Title = styled.Text`
-  font-size: 32px;
+  font-size: 42px;
   color: #fff;
+  font-family: 'Monoton';
 `;
 const List = styled.Text`
   font-size: 16px;
