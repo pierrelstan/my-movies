@@ -21,6 +21,13 @@ class WebAPI {
       }`,
     );
   };
+  static getSearchMovies = async (SearchText, page) => {
+    return axiosService.get(
+      `search/movie?api_key=${process.env.API_TOKEN}&language=en-US&page=${
+        page + 1
+      }&query=${SearchText}&include_adult=false`,
+    );
+  };
 }
 
 export default WebAPI;
