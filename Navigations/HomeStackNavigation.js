@@ -89,9 +89,7 @@ function HomeStackNavigation() {
           component={BottomNavigation}
           options={{
             headerShown: false,
-            headerTintColor: '#fff',
             headerStyle: {
-              backgroundColor: `#333`,
               elevation: 0,
               shadowOpacity: 0,
             },
