@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   StatusBar,
   SafeAreaView,
   ScrollView,
   Dimensions,
+  Animated,
+  StyleSheet,
+  Text,
 } from 'react-native';
+import { useHeaderHeight } from '@react-navigation/stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import styled from 'styled-components';
 import ItemMemo from '../components/Item';
@@ -21,7 +25,9 @@ if (window.width >= 320) {
   w = window.height / 2;
 }
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
+  const height = useHeaderHeight();
+
   useEffect(() => {
     async function changeScreenOrientation() {
       await ScreenOrientation.lockAsync(
@@ -30,24 +36,17 @@ export default function HomeScreen() {
     }
     changeScreenOrientation();
   }, []);
-  return (
-    <View
-      style={{
-        backgroundColor: '#E3EDF7',
-      }}
-    >
-      <Header />
-      <ItemMemo />
 
+  return (
+    <View>
       <SafeAreaView>
         <ScrollView
           contentContainerStyle={{
-            backgroundColor: 'lightgrey',
-            paddingBottom: 80,
-            paddingTop: 10,
+            backgroundColor: '#555',
+            paddingTop: height,
           }}
-          // onScroll={() => {}}
         >
+          <MainTitle>lo</MainTitle>
           <CarouseHero />
           <View>
             <Title>Trending Now</Title>
@@ -60,6 +59,7 @@ export default function HomeScreen() {
         </ScrollView>
       </SafeAreaView>
       <StatusBar style='dark' statusBarStyle='auto' />
+      <ItemMemo />
     </View>
   );
 }
@@ -68,4 +68,12 @@ const Title = styled.Text`
   font-size: 18px;
   margin: 4px;
   font-weight: bold;
+  color: #fff;
+`;
+const MainTitle = styled.Text`
+  font-size: 42px;
+  color: #fff;
+  font-family: 'Monoton';
+  text-align: center;
+  margin-bottom: 5px;
 `;
