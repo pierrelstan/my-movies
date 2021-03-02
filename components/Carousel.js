@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
+import styled from 'styled-components';
+
 import {
   View,
-  Text,
   Dimensions,
   StyleSheet,
   TouchableOpacity,
@@ -40,7 +41,7 @@ const Item = ({
   };
   return (
     <TouchableOpacity onPress={() => ToggleOpenItem()}>
-      <View style={styles.item}>
+      <ContainerItem>
         <ParallaxImage
           source={{
             uri: `https://image.tmdb.org/t/p/w500/${image}`,
@@ -50,7 +51,7 @@ const Item = ({
           parallaxFactor={0.3}
           {...parallaxProps}
         />
-      </View>
+      </ContainerItem>
     </TouchableOpacity>
   );
 };
@@ -60,8 +61,6 @@ const CarouselHero = () => {
   const { movies } = useSelector((state) => ({
     movies: state.upcomingMovies.upcomingMovies,
   }));
-
-  // const renderItem = React.useMemo(() => Itemrender, [movies]);
 
   const renderItem = ({ item }, parallaxProps) => {
     return (
@@ -101,13 +100,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  item: {
-    width: screenWidth - 100,
-    height: screenWidth - 60,
-  },
+  item: {},
   imageContainer: {
     flex: 1,
-    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+    marginBottom: Platform.select({ ios: 0, android: 1 }),
     backgroundColor: 'rgba(0,0,0, 0.0)',
     borderRadius: 8,
   },
@@ -116,3 +112,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
+
+const ContainerItem = styled.View`
+  width: ${screenWidth - 100}px;
+  height: ${screenWidth - 60}px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+`;
