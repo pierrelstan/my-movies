@@ -2,17 +2,36 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { OpenItem } from '../redux/actions/openitemAction';
+import { CloseItem, OpenItem } from '../redux/actions/openitemAction';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getItemModal } from '../redux/actions/itemModalAction';
+import imagelogo from '../assets/imageLogo.jpg';
 
-const Item = ({ image, id, description }) => {
+const Item = ({
+  title,
+  image,
+  id,
+  description,
+  voteCount,
+  voteAverage,
+  dateRelease,
+}) => {
   const dispatch = useDispatch();
 
   const ToggleOpenItem = () => {
     Promise.all([
       dispatch(OpenItem()),
-      dispatch(getItemModal(id, image, description)),
+      dispatch(
+        getItemModal(
+          id,
+          image,
+          description,
+          title,
+          voteCount,
+          voteAverage,
+          dateRelease,
+        ),
+      ),
     ]);
   };
 
@@ -25,7 +44,13 @@ const Item = ({ image, id, description }) => {
     >
       <ContainerImage>
         <TouchableOpacity onPress={() => ToggleOpenItem()}>
-          <Image source={{ uri: `https://image.tmdb.org/t/p/w500/${image}` }} />
+          {image ? (
+            <Image
+              source={{ uri: `https://image.tmdb.org/t/p/w500/${image}` }}
+            />
+          ) : (
+            <Image source={imagelogo} />
+          )}
         </TouchableOpacity>
       </ContainerImage>
     </View>
@@ -34,14 +59,17 @@ const Item = ({ image, id, description }) => {
 const renderItem = ({ item }) => {
   return (
     <Item
-      name={item.name}
+      key={item.id}
+      title={item.title}
       image={item.poster_path}
       id={item.id}
       description={item.overview}
+      voteAverage={item.vote_average}
+      voteCount={item.vote_count}
+      dateRelease={item.release_date}
     />
   );
 };
-
 export default renderItem;
 const Image = styled.Image`
   width: 100px;
