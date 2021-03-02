@@ -1,9 +1,9 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MoviesScreen from '../screens/moviesScreen';
-import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import SearchStackNavigation from './SearchStackNavigation';
+import HomeScreen from '../screens/HomeScreen';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -27,8 +27,9 @@ export default function BottomNavigation() {
       />
       <Tab.Screen
         name='Search'
-        component={MoviesScreen}
+        component={SearchStackNavigation}
         options={{
+          headerShown: false,
           tabBarLabel: 'Search',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
