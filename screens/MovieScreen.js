@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  View,
-  Image,
-  Dimensions,
-  SafeAreaView,
-  BackHandler,
-} from 'react-native';
-import numeral from 'numeral';
+import { View, Image, Dimensions, SafeAreaView } from 'react-native';
 import styled from 'styled-components';
 import { getMovie } from '../redux/actions/movieAction';
 import { ScrollView } from 'react-native-gesture-handler';
