@@ -23,7 +23,7 @@ export default function MostPopularMovies() {
       axiosService.isCancel = axios.isCancel();
     };
   }, []);
-
+  // const memoizeRenderItem = React.useMemo(() => renderItem);
   return (
     <View>
       <FlatList
@@ -35,11 +35,6 @@ export default function MostPopularMovies() {
         onEndReachedThreshold={0.5}
         initialNumToRender={10}
         refreshing={true}
-        onEndReached={() => {
-          if (page < totalPages) {
-            return dispatch(getMovies());
-          }
-        }}
         style={{
           margin: 0,
           padding: 0,
