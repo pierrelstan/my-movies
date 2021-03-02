@@ -5,9 +5,6 @@ import {
   SafeAreaView,
   ScrollView,
   Dimensions,
-  Animated,
-  StyleSheet,
-  Text,
 } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -17,7 +14,6 @@ import CarouseHero from '../components/Carousel';
 import TrendingMovies from '../components/TrendingMovies';
 import MostPopularMovies from '../components/MostPopularMovies';
 import UpcomingMovies from '../components/UpcomingMovies';
-import Header from '../components/Header';
 
 const window = Dimensions.get('window');
 let w;
