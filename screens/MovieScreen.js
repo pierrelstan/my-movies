@@ -6,7 +6,7 @@ import { getMovie } from '../redux/actions/movieAction';
 import { ScrollView } from 'react-native-gesture-handler';
 import imagelogo from '../assets/imageLogo.jpg';
 
-const { width: ScreeWidth } = Dimensions.get('window');
+const { height: ScreenHeight } = Dimensions.get('window');
 
 export default function MovieScreen({ route, navigation }) {
   const {
@@ -28,7 +28,12 @@ export default function MovieScreen({ route, navigation }) {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View>
+        <View
+          style={{
+            backgroundColor: '#444',
+            height: ScreenHeight,
+          }}
+        >
           {image ? (
             <Image
               style={{
@@ -50,16 +55,12 @@ export default function MovieScreen({ route, navigation }) {
               source={imagelogo}
             />
           )}
-          <View
-            style={{
-              flex: 1,
-            }}
-          >
+          <View>
             <Text
               style={{
                 textAlign: 'center',
                 fontSize: 30,
-                color: '#333',
+                color: '#fff',
               }}
             >
               {title}
@@ -85,5 +86,8 @@ export default function MovieScreen({ route, navigation }) {
 
 const Text = styled.Text`
   font-weight: bold;
+  color: #fff;
 `;
-const Description = styled.Text``;
+const Description = styled.Text`
+  color: #fff;
+`;
