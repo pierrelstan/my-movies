@@ -17,6 +17,9 @@ const Item = ({
   dateRelease,
 }) => {
   const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(CloseItem());
+  }, []);
 
   const ToggleOpenItem = () => {
     Promise.all([
