@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import styled from 'styled-components';
-
 import {
   View,
   Dimensions,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import { OpenItem } from '../redux/actions/openitemAction';
 import { getItemModal } from '../redux/actions/itemModalAction';
+import CarouselSkeleton from './CarouselSkeleton';
 
 const { width: screenWidth } = Dimensions.get('window');
 const Item = ({
@@ -49,22 +49,25 @@ const Item = ({
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.3}
+          showSpinner={false}
           {...parallaxProps}
         />
       </ContainerItem>
     </TouchableOpacity>
   );
 };
+const ItemMemo = React.memo(Item);
 const CarouselHero = () => {
   const carouselRef = useRef(null);
 
-  const { movies } = useSelector((state) => ({
+  const { movies, isLoading } = useSelector((state) => ({
     movies: state.upcomingMovies.upcomingMovies,
+    isLoading: state.upcomingMovies.isLoading,
   }));
 
   const renderItem = ({ item }, parallaxProps) => {
     return (
-      <Item
+      <ItemMemo
         key={item.id}
         title={item.title}
         image={item.poster_path}
@@ -79,17 +82,21 @@ const CarouselHero = () => {
   };
   return (
     <View style={styles.container}>
-      <Carousel
-        ref={carouselRef}
-        sliderWidth={screenWidth}
-        sliderHeight={screenWidth}
-        itemWidth={screenWidth - 100}
-        data={movies}
-        renderItem={renderItem}
-        hasParallaxImages={true}
-        layout={'default'}
-        useScrollView={true}
-      />
+      {isLoading ? (
+        <CarouselSkeleton />
+      ) : (
+        <Carousel
+          ref={carouselRef}
+          sliderWidth={screenWidth}
+          sliderHeight={screenWidth}
+          itemWidth={screenWidth - 100}
+          data={movies}
+          renderItem={renderItem}
+          hasParallaxImages={true}
+          layout={'default'}
+          useScrollView={true}
+        />
+      )}
     </View>
   );
 };
