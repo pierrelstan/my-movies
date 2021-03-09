@@ -7,7 +7,11 @@ import lastMovie from './latestMovieReducer';
 import item from './itemModalReducer';
 import movie from './movieReducer';
 import searchMovies from './searchMoviesReducer';
+import listMovies from './addToListReducer';
+import avatar from './avatarReducer';
 const allReducers = combineReducers({
+  avatar: avatar,
+  listMovies: listMovies,
   searchMovies: searchMovies,
   movie: movie,
   item: item,
