@@ -14,7 +14,6 @@ import CarouseHero from '../components/Carousel';
 import TrendingMovies from '../components/TrendingMovies';
 import MostPopularMovies from '../components/MostPopularMovies';
 import UpcomingMovies from '../components/UpcomingMovies';
-import MoviesSkeleton from '../components/MoviesSkeleton';
 
 const window = Dimensions.get('window');
 let w;
@@ -37,13 +36,13 @@ export default function HomeScreen({ navigation }) {
   return (
     <View
       style={{
-        backgroundColor: '#555',
+        backgroundColor: '#24243C',
       }}
     >
       <SafeAreaView>
         <ScrollView
           contentContainerStyle={{
-            backgroundColor: '#555',
+            backgroundColor: '#24243C',
             paddingTop: height,
           }}
         >
@@ -56,7 +55,7 @@ export default function HomeScreen({ navigation }) {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <StatusBar style='dark' statusBarStyle='auto' />
+      <StatusBar backgroundColor='#24243C' statusBarStyle='auto' />
       <ItemMemo />
     </View>
   );
@@ -70,7 +69,7 @@ const Title = styled.Text`
 `;
 const MainTitle = styled.Text`
   font-size: 42px;
-  color: #fff;
+  color: #b6b133;
   font-family: 'Monoton';
   text-align: center;
   margin-bottom: 5px;
