@@ -45,6 +45,7 @@ export default function ProfileStackScreen() {
         name='MovieScreen'
         component={MovieScreen}
         options={{
+          headerTitle: false,
           headerStyle: {
             backgroundColor: '#383958',
           },
