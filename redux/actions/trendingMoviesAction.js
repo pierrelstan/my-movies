@@ -6,12 +6,12 @@ import {
   LOADING_MOVIES_TRENDING_FAILURE,
 } from '../types/types';
 
-export function getTrendingMovies(page = 0) {
+export function getTrendingMovies(page = 0, source) {
   return function (dispatch) {
     dispatch({
       type: LOADING_MOVIES_TRENDING_START,
     });
-    return WebAPI.getTrendingMovies(page)
+    return WebAPI.getTrendingMovies(page, source)
       .then((movies) => {
         dispatch({
           type: GET_MOVIES_TRENDING_SUCCESS,
@@ -20,10 +20,14 @@ export function getTrendingMovies(page = 0) {
           totalPages: movies.data.total_pages,
         });
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: LOADING_MOVIES_TRENDING_FAILURE,
         });
+        if (axios.isCancel(err)) {
+          return 'axios request cancelled';
+        }
+        return err;
       });
   };
 }
