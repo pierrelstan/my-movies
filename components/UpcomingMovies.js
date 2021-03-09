@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import { View } from 'react-native';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,17 +21,19 @@ export default function UpcomingMovies() {
   useEffect(() => {
     dispatch(getUpcomingMovies());
     return () => {
-      axiosService.isCancel = axios.isCancel();
+      axiosService.CancelToken;
     };
   }, []);
+
   // const memoizeRenderItem = React.useMemo(() => renderItem);
   return (
     <View>
       <View>
         {isLoading ? <TitleSkeleton /> : <Title>Upcoming Movies</Title>}
       </View>
-      {isLoading && <MoviesSkeleton />}
-      {!isLoading && (
+      {isLoading ? (
+        <MoviesSkeleton />
+      ) : (
         <FlatList
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -55,5 +56,5 @@ const Title = styled.Text`
   font-size: 18px;
   margin: 4px;
   font-weight: bold;
-  color: #fff;
+  color: #b6b133;
 `;
