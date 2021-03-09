@@ -10,14 +10,7 @@ import SearchMoviesScreen from '../screens/SearchMoviesScreen';
 
 const Stack = createStackNavigator();
 
-function SearchStackNavigation({}) {
-  const [loaded] = useFonts({
-    Monoton: require('../assets/fonts/Monoton-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    return null;
-  }
+function SearchStackNavigation({ navigation }) {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -25,7 +18,7 @@ function SearchStackNavigation({}) {
         component={SearchMoviesScreen}
         options={{
           headerShown: false,
-          tabBarLabel: 'Search',
+          animationEnabled: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name='movie-search'
@@ -35,31 +28,17 @@ function SearchStackNavigation({}) {
           ),
         }}
       />
+
       <Stack.Screen
         name='MovieScreen'
         component={MovieScreen}
         options={{
           headerTitle: false,
-          headerTintColor: '#fff',
-          headerTransparent: true,
-          headerLeft: (props) => {
-            return (
-              <View
-                style={{
-                  backgroundColor: 'rgba(0,0,0,0.5)',
-                  borderRadius: 50,
-                  marginLeft: 5,
-                }}
-              >
-                <HeaderBackButton
-                  labelStyle={{
-                    backgroundColor: '#fff',
-                  }}
-                  {...props}
-                />
-              </View>
-            );
+          headerStyle: {
+            backgroundColor: '#383958',
           },
+          animationEnabled: false,
+          headerTintColor: '#ffff',
         }}
       />
     </Stack.Navigator>
