@@ -49,7 +49,7 @@ const Item = ({
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.3}
-          showSpinner={false}
+          showSpinner={true}
           {...parallaxProps}
         />
       </ContainerItem>
