@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { View, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrendingMovies } from '../redux/actions/trendingMoviesAction';
@@ -12,28 +11,24 @@ import TitleSkeleton from './TitleSkeleton';
 
 export default function TrendingMovies() {
   const dispatch = useDispatch();
-  const { trendingMovies, page, totalPages, isLoading } = useSelector(
-    (state) => ({
-      trendingMovies: state.trendingMovies.trendingMovies,
-      page: state.trendingMovies.page,
-      totalPages: state.trendingMovies.totalPages,
-      isLoading: state.trendingMovies.isLoading,
-    }),
-  );
+  const { trendingMovies, isLoading } = useSelector((state) => ({
+    trendingMovies: state.trendingMovies.trendingMovies,
+    page: state.trendingMovies.page,
+    totalPages: state.trendingMovies.totalPages,
+    isLoading: state.trendingMovies.isLoading,
+  }));
 
   useEffect(() => {
     dispatch(getTrendingMovies());
     return () => {
-      axiosService.isCancel = axios.isCancel();
+      axiosService.CancelToken;
     };
   }, []);
+
   // const memoizeRenderItem = React.useMemo(() => renderItem);
   return (
     <View>
-      <View>
-        {isLoading && <TitleSkeleton />}
-        {!isLoading && <Title>Trending Now</Title>}
-      </View>
+      <View>{isLoading ? <TitleSkeleton /> : <Title>Trending Now</Title>}</View>
 
       {isLoading && <MoviesSkeleton />}
       {!isLoading && (
@@ -59,5 +54,5 @@ const Title = styled.Text`
   font-size: 18px;
   margin: 4px;
   font-weight: bold;
-  color: #fff;
+  color: #b6b133;
 `;
