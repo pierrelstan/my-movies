@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getTrendingMovies } from '../redux/actions/trendingMoviesAction';
 import { FlatList } from 'react-native-gesture-handler';
 import renderItem from './ListItemsChildren';
-import { getMovies } from '../redux/actions/moviesAction';
+import { getMostPopularMovies } from '../redux/actions/moviesAction';
 import axiosService from '../assets/ServicesAxios/axiosService';
 import MoviesSkeleton from './MoviesSkeleton';
 import TitleSkeleton from './TitleSkeleton';
@@ -21,11 +21,13 @@ export default function MostPopularMovies() {
   }));
 
   useEffect(() => {
-    dispatch(getMovies());
+    dispatch(getMostPopularMovies());
+
     return () => {
-      axiosService.isCancel = axios.isCancel();
+      axiosService.CancelToken;
     };
   }, []);
+
   // const memoizeRenderItem = React.useMemo(() => renderItem);
   return (
     <View>
@@ -58,5 +60,5 @@ const Title = styled.Text`
   font-size: 18px;
   margin: 4px;
   font-weight: bold;
-  color: #fff;
+  color: #b6b133;
 `;
