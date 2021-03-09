@@ -5,7 +5,7 @@ import {
   LOADING_MOVIES_FAILURE,
 } from '../types/types';
 
-export function getMovies(page = 0) {
+export function getMostPopularMovies(page = 0) {
   return function (dispatch) {
     dispatch({
       type: LOADING_MOVIES_START,
