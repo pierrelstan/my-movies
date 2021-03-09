@@ -12,25 +12,57 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
+import { Ionicons } from 'react-native-vector-icons';
 import { getSearchMovies } from '../redux/actions/searchMoviesActions';
 import imagelogo from '../assets/imageLogo.jpg';
+import addToListReducer from '../redux/reducers/addToListReducer';
+import addToListAction from '../redux/actions/addToListAction';
 
-export default function SearchMoviesScreen() {
+const DisplayListColor = ({ id }) => {
+  const [active, setActive] = useState(false);
+  const { listMovies } = useSelector((state) => ({
+    listMovies: state.listMovies.listMovies,
+  }));
+
+  useEffect(() => {
+    function fv() {
+      let index = listMovies.findIndex((item) => item.id === id) !== -1;
+      setActive(index);
+    }
+    fv();
+  }, [listMovies.length]);
+
+  return (
+    <View>
+      {active === true ? (
+        <Ionicons name='bookmark-outline' color='#B6B133' size={26} />
+      ) : (
+        <Ionicons name='bookmark-outline' color='#fff' size={26} />
+      )}
+    </View>
+  );
+};
+
+export default function SearchMoviesScreen({ children }) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [SearchText, setSearchText] = useState('');
+  const [SearchText, setSearchText] = useState('stars');
   const [data, setData] = useState([]);
 
-  const { searchMovies, page, totalPages } = useSelector((state) => ({
-    searchMovies: state.searchMovies.searchMovies,
-    page: state.searchMovies.page,
-    totalPages: state.searchMovies.totalPages,
-  }));
+  const { searchMovies, page, totalPages, listMovies } = useSelector(
+    (state) => ({
+      searchMovies: state.searchMovies.searchMovies,
+      page: state.searchMovies.page,
+      totalPages: state.searchMovies.totalPages,
+      listMovies: state.listMovies.listMovies,
+    }),
+  );
 
   useEffect(() => {
     setData([...searchMovies]);
   }, [searchMovies]);
+
   const handleChangeText = (text) => {
     setSearchText(text);
   };
@@ -41,6 +73,10 @@ export default function SearchMoviesScreen() {
       setLoading(false);
       dispatch(getSearchMovies(SearchText));
     }
+  };
+
+  const toggleList = (item) => {
+    dispatch(addToListAction(item));
   };
 
   const handleDetailsMovie = (item) => {
@@ -68,6 +104,7 @@ export default function SearchMoviesScreen() {
       dateRelease,
     });
   };
+  // console.log(data2);
 
   return (
     <View style={styles.container}>
@@ -105,46 +142,62 @@ export default function SearchMoviesScreen() {
           keyExtractor={(item) => item.id.toString()}
           data={data}
           onEndReachedThreshold={0.5}
-          initialNumToRender={10}
+          initialNumToRender={50}
           onEndReached={() => {
             if (page < totalPages) {
               dispatch(getSearchMovies(SearchText, page));
             }
           }}
           renderItem={({ item }) => (
-            <View key={item.id}>
-              <TouchableOpacity
-                style={styles.main_container}
-                // onPress={() => displayDetailsForFilms(id)}
-                onPress={() => handleDetailsMovie(item)}
-              >
-                {item.backdrop_path ? (
-                  <Image
-                    style={styles.image}
-                    source={{
-                      uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
-                    }}
-                  />
-                ) : (
-                  <Image style={styles.image} source={imagelogo} />
-                )}
+            <View
+              key={item.id}
+              style={{
+                backgroundColor: '#383958',
+                margin: 10,
+                borderRadius: 10,
+              }}
+            >
+              <View style={styles.main_container}>
+                <TouchableOpacity onPress={() => handleDetailsMovie(item)}>
+                  <View>
+                    {item.backdrop_path ? (
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
+                        }}
+                      />
+                    ) : (
+                      <Image style={styles.image} source={imagelogo} />
+                    )}
+                  </View>
+                </TouchableOpacity>
                 <View style={styles.content_container}>
                   <View style={styles.header_container}>
-                    <Text style={styles.title_text}>{item.title}</Text>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                      }}
+                    >
+                      <Text style={styles.title_text}>{item.title}</Text>
+                      <TouchableOpacity onPress={() => toggleList(item)}>
+                        <DisplayListColor id={item.id} />
+                      </TouchableOpacity>
+                    </View>
+
                     <Text style={styles.vote_text}>{item.vote}</Text>
                   </View>
+
                   <View style={styles.description_container}>
-                    <Text style={styles.description_text} numberOfLines={6}>
-                      {item.overview}
-                    </Text>
-                  </View>
-                  <View style={styles.date_container}>
-                    <Text style={styles.date_text}>
-                      Sorti le {item.release_date}
-                    </Text>
+                    <TouchableOpacity onPress={() => handleDetailsMovie(item)}>
+                      <Text style={styles.description_text} numberOfLines={3}>
+                        {item.overview}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
-              </TouchableOpacity>
+              </View>
             </View>
           )}
         />
@@ -154,7 +207,7 @@ export default function SearchMoviesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#444' },
+  container: { flex: 1, backgroundColor: '#24243C' },
   textInput: {
     height: 50,
     borderWidth: 1,
@@ -181,14 +234,19 @@ const styles = StyleSheet.create({
     height: 20,
   },
   main_container: {
-    height: 190,
+    height: 120,
     flexDirection: 'row',
   },
   image: {
     width: 120,
-    height: 180,
-    margin: 5,
+    height: 120,
+    marginRight: 5,
     backgroundColor: 'gray',
+    resizeMode: 'cover',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
   },
   content_container: {
     flex: 1,
