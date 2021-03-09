@@ -134,7 +134,7 @@ const Text = styled.Text`
 `;
 const Content = styled.View`
   height: ${Math.round(ScreenHeight)}px;
-  background: #444;
+  background: #24243c;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 5px;
