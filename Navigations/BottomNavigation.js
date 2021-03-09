@@ -1,27 +1,48 @@
 import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Ionicons } from 'react-native-vector-icons';
 import ProfileScreen from '../screens/ProfileScreen';
 import SearchStackNavigation from './SearchStackNavigation';
 import HomeScreen from '../screens/HomeScreen';
+import AllMovies from '../screens/AllMovies';
+import ProfileStackScreen from './ProfileStackScreen';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function BottomNavigation() {
   return (
     <Tab.Navigator
       initialRouteName='Home'
-      activeColor='#fff'
-      inactiveColor='#bdbdbd'
-      barStyle={{ backgroundColor: '#333' }}
+      tabBarOptions={{
+        activeTintColor: '#fff',
+        activeBackgroundColor: '#444',
+        inactiveTintColor: '#B6B133',
+        inactiveBackgroundColor: '#444',
+        showLabel: false,
+        tabStyle: {
+          backgroundColor: '#383958',
+          marginTop: -1,
+        },
+      }}
     >
       <Tab.Screen
         name='Home'
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          animationEnabled: false,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name='home' color={color} size={26} />
+            <Ionicons name='home-outline' color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='AllMovies'
+        component={AllMovies}
+        options={{
+          animationEnabled: false,
+          tabBarIcon: ({ color }) => (
+            <Ionicons name='film-outline' color={color} size={26} />
           ),
         }}
       />
@@ -30,24 +51,21 @@ export default function BottomNavigation() {
         component={SearchStackNavigation}
         options={{
           headerShown: false,
-          tabBarLabel: 'Search',
+          animationEnabled: false,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name='movie-search'
-              color={color}
-              size={26}
-            />
+            <Ionicons name='search-outline' color={color} size={26} />
           ),
         }}
       />
 
       <Tab.Screen
         name='Profile'
-        component={ProfileScreen}
+        component={ProfileStackScreen}
         options={{
-          tabBarLabel: 'Profile',
+          // tabBarLabel: 'Profile',
+          animationEnabled: false,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name='account' color={color} size={26} />
+            <Ionicons name='person-outline' color={color} size={26} />
           ),
         }}
       />
