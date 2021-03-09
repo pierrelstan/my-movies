@@ -4,7 +4,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 export default function MoviesSkeleton() {
   return (
-    <SkeletonPlaceholder backgroundColor='#444' highlightColor='#666'>
+    <SkeletonPlaceholder backgroundColor='#383958' highlightColor='#666'>
       <View
         style={{
           flexDirection: 'row',
