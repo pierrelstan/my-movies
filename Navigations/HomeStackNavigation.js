@@ -11,6 +11,8 @@ import PreviewVideo from '../screens/PreviewVideoScreen';
 import MovieScreen from '../screens/MovieScreen';
 import HomeScreen from '../screens/HomeScreen';
 import BottomNavigation from './BottomNavigation';
+import Login from '../components/Login';
+import SignUp from '../components/SignUp';
 
 const Stack = createStackNavigator();
 const navigationRef = React.createRef();
@@ -75,20 +77,50 @@ function HomeStackNavigation() {
     Monoton: require('../assets/fonts/Monoton-Regular.ttf'),
   });
 
-  if (!loaded) {
-    return null;
-  }
   return (
-    <NavigationContainer
-      tabBar={(props) => <MyTabBar {...props} />}
-      ref={navigationRef}
-    >
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
+        <Stack.Screen
+          name='Login'
+          component={Login}
+          options={{
+            headerShown: false,
+            animationEnabled: false,
+            headerStyle: {
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTitleStyle: {
+              fontSize: 40,
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }}
+        />
+        <Stack.Screen
+          name='SignUp'
+          component={SignUp}
+          options={{
+            headerShown: false,
+            animationEnabled: false,
+            headerStyle: {
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+            headerTitleStyle: {
+              fontSize: 40,
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }}
+        />
+
         <Stack.Screen
           name='Home'
           component={BottomNavigation}
           options={{
             headerShown: false,
+            animationEnabled: false,
             headerStyle: {
               elevation: 0,
               shadowOpacity: 0,
@@ -106,6 +138,7 @@ function HomeStackNavigation() {
             headerTitle: false,
             headerTransparent: true,
             tabBarVisible: false,
+            animationEnabled: false,
             headerTintColor: '#fff',
             headerLeft: (props) => {
               return (
@@ -140,27 +173,11 @@ function HomeStackNavigation() {
           component={MovieScreen}
           options={{
             headerTitle: false,
-
-            headerTintColor: '#fff',
-            headerTransparent: true,
-            headerLeft: (props) => {
-              return (
-                <View
-                  style={{
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                    borderRadius: 50,
-                    margin: 20,
-                  }}
-                >
-                  <HeaderBackButton
-                    labelStyle={{
-                      backgroundColor: '#fff',
-                    }}
-                    {...props}
-                  />
-                </View>
-              );
+            headerStyle: {
+              backgroundColor: '#383958',
             },
+            animationEnabled: false,
+            headerTintColor: '#ffff',
           }}
         />
       </Stack.Navigator>
