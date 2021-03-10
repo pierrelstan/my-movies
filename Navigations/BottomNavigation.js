@@ -37,16 +37,6 @@ export default function BottomNavigation() {
         }}
       />
       <Tab.Screen
-        name='AllMovies'
-        component={AllMovies}
-        options={{
-          animationEnabled: false,
-          tabBarIcon: ({ color }) => (
-            <Ionicons name='film-outline' color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name='Search'
         component={SearchStackNavigation}
         options={{
