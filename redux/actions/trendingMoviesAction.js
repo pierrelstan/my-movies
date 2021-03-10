@@ -6,12 +6,12 @@ import {
   LOADING_MOVIES_TRENDING_FAILURE,
 } from '../types/types';
 
-export function getTrendingMovies(page = 0, source) {
+export function getTrendingMovies(page = 0) {
   return function (dispatch) {
     dispatch({
       type: LOADING_MOVIES_TRENDING_START,
     });
-    return WebAPI.getTrendingMovies(page, source)
+    return WebAPI.getTrendingMovies(page)
       .then((movies) => {
         dispatch({
           type: GET_MOVIES_TRENDING_SUCCESS,
