@@ -2,18 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   View,
-  Image,
   Dimensions,
   SafeAreaView,
   ImageBackground,
+  Share,
 } from 'react-native';
 import styled from 'styled-components';
 import { Ionicons } from 'react-native-vector-icons';
 import { getMovie } from '../redux/actions/movieAction';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import imagelogo from '../assets/imageLogo.jpg';
+import addToListAction from '../redux/actions/addToListAction';
 
 const { height: ScreenHeight, width: ScreenWidth } = Dimensions.get('window');
+
+const DisplayListColor = ({ id }) => {
+  const [active, setActive] = useState(false);
+  const { listMovies } = useSelector((state) => ({
+    listMovies: state.listMovies.listMovies,
+  }));
+
+  useEffect(() => {
+    function fv() {
+      let index = listMovies.findIndex((item) => item.id === id) !== -1;
+      setActive(index);
+    }
+    fv();
+  }, [listMovies.length]);
+
+  return (
+    <View>
+      {active === true ? (
+        <Ionicons name='checkmark-done-outline' color='#B6B133' size={26} />
+      ) : (
+        <Ionicons name='checkmark-outline' color='#fff' size={26} />
+      )}
+    </View>
+  );
+};
 
 export default function MovieScreen({ route, navigation }) {
   const {
@@ -32,6 +58,36 @@ export default function MovieScreen({ route, navigation }) {
     [id],
   );
 
+  const _shareFilm = () => {
+    Share.share({
+      title: title,
+      message: description,
+    });
+  };
+
+  const toggleList = (
+    id,
+    image,
+    description,
+    title,
+    voteCount,
+    voteAverage,
+    dateRelease,
+  ) => {
+    let item = {
+      id: id,
+      poster_path: image,
+      overview: description,
+      title: title,
+      vote_count: voteCount,
+      vote_average: voteAverage,
+      release_date: dateRelease,
+    };
+    dispatch(addToListAction(item));
+  };
+  const handlePreviewVideo = (id) => {
+    navigation.navigate('Trailer', { id: id });
+  };
   return (
     <SafeAreaView>
       <ScrollView>
@@ -61,9 +117,41 @@ export default function MovieScreen({ route, navigation }) {
           )}
           <Wrapper>
             <ContainerIcons>
-              <Ionicons name='add-outline' size={32} color='#B6B133' />
-              <Ionicons name='play-outline' size={32} color='#B6B133' />
-              <Ionicons name='share-social-outline' size={32} color='#B6B133' />
+              <TouchableOpacity
+                onPress={() =>
+                  toggleList(
+                    id,
+                    image,
+                    description,
+                    title,
+                    voteCount,
+                    voteAverage,
+                    dateRelease,
+                  )
+                }
+                accessible={true}
+                accessibilityLabel='Add to list!'
+              >
+                <DisplayListColor id={id} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                accessible={true}
+                accessibilityLabel='Play'
+                onPress={() => handlePreviewVideo(id)}
+              >
+                <Ionicons name='play-outline' size={32} color='#B6B133' />
+              </TouchableOpacity>
+              <TouchableOpacity
+                accessible={true}
+                accessibilityLabel='Share'
+                onPress={() => _shareFilm()}
+              >
+                <Ionicons
+                  name='share-social-outline'
+                  size={32}
+                  color='#B6B133'
+                />
+              </TouchableOpacity>
             </ContainerIcons>
           </Wrapper>
           <Content>
