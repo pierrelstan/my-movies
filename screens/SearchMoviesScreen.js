@@ -15,7 +15,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Ionicons } from 'react-native-vector-icons';
 import { getSearchMovies } from '../redux/actions/searchMoviesActions';
 import imagelogo from '../assets/imageLogo.jpg';
-import addToListReducer from '../redux/reducers/addToListReducer';
 import addToListAction from '../redux/actions/addToListAction';
 
 const DisplayListColor = ({ id }) => {
