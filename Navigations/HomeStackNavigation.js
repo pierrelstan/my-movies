@@ -155,7 +155,6 @@ function HomeStackNavigation() {
                   <HeaderBackButton
                     {...props}
                     onPress={() => {
-                      // navigate('Home');
                       navigate('Home', { screen: 'Home' });
                       ScreenOrientation.lockAsync(
                         ScreenOrientation.OrientationLock.PORTRAIT,
