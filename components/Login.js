@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import {
   Text,
   StatusBar,
-  View,
   Animated,
   Dimensions,
   ImageBackground,
