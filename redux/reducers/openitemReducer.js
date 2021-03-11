@@ -1,7 +1,7 @@
 import { OPEN_ITEM, CLOSE_ITEM } from '../types/types';
 
 const initialState = {
-  action: '',
+  action: false,
 };
 
 export default function (state = initialState, action) {
@@ -9,12 +9,12 @@ export default function (state = initialState, action) {
     case OPEN_ITEM:
       return {
         ...state,
-        action: 'OPEN_ITEM',
+        action: true,
       };
     case CLOSE_ITEM:
       return {
         ...state,
-        action: 'CLOSE_ITEM',
+        action: false,
       };
     case 'RESET': {
       return initialState;
