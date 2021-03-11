@@ -8,6 +8,7 @@ import {
   Share,
 } from 'react-native';
 import styled from 'styled-components';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from 'react-native-vector-icons';
 import { getMovie } from '../redux/actions/movieAction';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -21,7 +22,6 @@ const DisplayListColor = ({ id }) => {
   const { listMovies } = useSelector((state) => ({
     listMovies: state.listMovies.listMovies,
   }));
-
   useEffect(() => {
     function fv() {
       let index = listMovies.findIndex((item) => item.id === id) !== -1;
@@ -53,10 +53,18 @@ export default function MovieScreen({ route, navigation }) {
   } = route.params;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => navigation.addListener('focus', () => dispatch(getMovie(id))),
-    [id],
-  );
+  useEffect(() => {
+    async function changeScreenOrientation() {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT,
+      );
+    }
+    navigation.addListener('focus', () => {
+      changeScreenOrientation();
+      dispatch(getMovie(id));
+    }),
+      [id];
+  });
 
   const _shareFilm = () => {
     Share.share({
@@ -88,6 +96,7 @@ export default function MovieScreen({ route, navigation }) {
   const handlePreviewVideo = (id) => {
     navigation.navigate('Trailer', { id: id });
   };
+
   return (
     <SafeAreaView>
       <ScrollView>
