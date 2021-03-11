@@ -30,7 +30,7 @@ export default function HomeScreen({ navigation }) {
         ScreenOrientation.OrientationLock.PORTRAIT,
       );
     }
-    changeScreenOrientation();
+    navigation.addListener('focus', () => changeScreenOrientation());
   }, []);
 
   return (
