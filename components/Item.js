@@ -29,16 +29,9 @@ function Item() {
   const TopAnim = useRef(new Animated.Value(ScreenHeight)).current;
 
   useEffect(() => {
-    async function changeScreenOrientation() {
-      await ScreenOrientation.lockAsync(
-        ScreenOrientation.OrientationLock.PORTRAIT,
-      );
-    }
-    changeScreenOrientation();
-
     let mounted = true;
     if (mounted) {
-      if (action == 'OPEN_ITEM') {
+      if (action === true) {
         Animated.spring(TopAnim, {
           toValue: Math.round(ScreenHeight) / 2.3,
           duration: 0,
