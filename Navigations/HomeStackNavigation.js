@@ -6,79 +6,20 @@ import {
 } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
-import * as ScreenOrientation from 'expo-screen-orientation';
 import PreviewVideo from '../screens/PreviewVideoScreen';
 import MovieScreen from '../screens/MovieScreen';
-import HomeScreen from '../screens/HomeScreen';
 import BottomNavigation from './BottomNavigation';
 import Login from '../components/Login';
 import SignUp from '../components/SignUp';
 
 const Stack = createStackNavigator();
-const navigationRef = React.createRef();
-function navigate(name, params) {
-  navigationRef.current && navigationRef.current.navigate(name, params);
-}
-
-function MyTabBar({ state, descriptors, navigation }) {
-  return (
-    <View style={{ flexDirection: 'row' }}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-
-        const isFocused = state.index === index;
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
-
-        return (
-          <TouchableOpacity
-            accessibilityRole='button'
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1 }}
-          >
-            <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
-              {label}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-}
 
 function HomeStackNavigation() {
   const [loaded] = useFonts({
     Monoton: require('../assets/fonts/Monoton-Regular.ttf'),
   });
-
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name='Login'
@@ -152,15 +93,7 @@ function HomeStackNavigation() {
                     alignItems: 'center',
                   }}
                 >
-                  <HeaderBackButton
-                    {...props}
-                    onPress={() => {
-                      navigate('Home', { screen: 'Home' });
-                      ScreenOrientation.lockAsync(
-                        ScreenOrientation.OrientationLock.PORTRAIT,
-                      );
-                    }}
-                  />
+                  <HeaderBackButton {...props} />
                 </View>
               );
             },
