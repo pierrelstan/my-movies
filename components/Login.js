@@ -26,22 +26,30 @@ export default function Login({ navigation }) {
     password: '',
   });
   const [active, setActive] = React.useState(false);
+  const [state, setState] = React.useState({
+    email: '',
+    password: '',
+  });
 
   React.useEffect(() => {
     const getData = async () => {
       try {
         const value = await AsyncStorage.getItem('state');
+
         if (value !== null) {
           let data = JSON.parse(value);
 
-          const { email } = data;
+          const { email, password } = data;
+          setState({
+            email: email,
+            password: password,
+          });
         }
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     };
     getData();
   }, [active]);
+
   useFocusEffect(
     React.useCallback(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -73,13 +81,13 @@ export default function Login({ navigation }) {
   };
   const hanldeSubmit = () => {
     const { email, password } = user;
-    saveState({ email, password });
 
-    if (email === 'st') {
+    if (email === state.email && password === state.password) {
       setActive(true);
     }
+
     setTimeout(() => {
-      if (email === 'st') {
+      if (email === state.email && password === state.password) {
         navigation.push('Home');
         setActive(false);
       }
