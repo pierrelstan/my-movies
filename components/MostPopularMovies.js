@@ -23,7 +23,6 @@ export default function MostPopularMovies() {
 
   useEffect(() => {
     dispatch(getMostPopularMovies());
-
     return () => {
       axiosService.CancelToken;
     };
