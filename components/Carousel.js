@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import styled from 'styled-components';
@@ -65,6 +65,9 @@ const CarouselHero = () => {
     isLoading: state.upcomingMovies.isLoading,
   }));
 
+  useEffect(() => {
+    movies.reverse();
+  }, []);
   const renderItem = ({ item }, parallaxProps) => {
     return (
       <ItemMemo
