@@ -10,6 +10,7 @@ import { getMostPopularMovies } from '../redux/actions/moviesAction';
 import axiosService from '../assets/ServicesAxios/axiosService';
 import MoviesSkeleton from './MoviesSkeleton';
 import TitleSkeleton from './TitleSkeleton';
+import { Title } from './styles/styles';
 
 export default function MostPopularMovies() {
   const dispatch = useDispatch();
@@ -55,10 +56,3 @@ export default function MostPopularMovies() {
     </View>
   );
 }
-
-const Title = styled.Text`
-  font-size: 18px;
-  margin: 4px;
-  font-weight: bold;
-  color: #b6b133;
-`;
