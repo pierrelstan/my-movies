@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTrendingMovies } from '../redux/actions/trendingMoviesAction';
 import { FlatList } from 'react-native-gesture-handler';
@@ -8,6 +7,7 @@ import renderItem from './ListItemsChildren';
 import axiosService from '../assets/ServicesAxios/axiosService';
 import MoviesSkeleton from './MoviesSkeleton';
 import TitleSkeleton from './TitleSkeleton';
+import { Title } from './styles/styles';
 
 export default function TrendingMovies() {
   const dispatch = useDispatch();
@@ -50,9 +50,3 @@ export default function TrendingMovies() {
     </View>
   );
 }
-const Title = styled.Text`
-  font-size: 18px;
-  margin: 4px;
-  font-weight: bold;
-  color: #b6b133;
-`;
