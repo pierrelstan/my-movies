@@ -1,6 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+const screenWidth = Dimensions.get('window').width;
 
 export default function MoviesSkeleton() {
   return (
@@ -12,10 +13,34 @@ export default function MoviesSkeleton() {
           justifyContent: 'center',
         }}
       >
-        <View style={{ width: 100, height: 150, margin: 5 }} />
-        <View style={{ width: 100, height: 150, margin: 5 }} />
-        <View style={{ width: 100, height: 150, margin: 5 }} />
-        <View style={{ width: 70, height: 150, margin: 5 }} />
+        <View
+          style={{
+            width: Math.round(screenWidth) >= 737 ? 300 : 100,
+            height: Math.round(screenWidth) >= 737 ? 450 : 150,
+            margin: 5,
+          }}
+        />
+        <View
+          style={{
+            width: Math.round(screenWidth) >= 737 ? 300 : 100,
+            height: Math.round(screenWidth) >= 737 ? 450 : 150,
+            margin: 5,
+          }}
+        />
+        <View
+          style={{
+            width: Math.round(screenWidth) >= 737 ? 300 : 100,
+            height: Math.round(screenWidth) >= 737 ? 450 : 150,
+            margin: 5,
+          }}
+        />
+        <View
+          style={{
+            width: Math.round(screenWidth) >= 737 ? 300 : 100,
+            height: Math.round(screenWidth) >= 737 ? 450 : 150,
+            margin: 5,
+          }}
+        />
       </View>
     </SkeletonPlaceholder>
   );
