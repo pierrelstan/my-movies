@@ -72,7 +72,6 @@ function ItemButtons({ data, navigation }) {
     voteAverage,
     dateRelease,
   }) => {
-    console.log(data);
     let item = {
       id: id,
       poster_path: image,
