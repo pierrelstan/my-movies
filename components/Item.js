@@ -6,7 +6,6 @@ import {
   View,
   SafeAreaView,
 } from 'react-native';
-import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components';
@@ -33,7 +32,7 @@ function Item() {
     if (mounted) {
       if (action === true) {
         Animated.spring(TopAnim, {
-          toValue: Math.round(ScreenHeight) / 2.3,
+          toValue: Math.round(ScreenHeight) / 2.9,
           duration: 0,
           useNativeDriver: true,
         }).start();
@@ -67,15 +66,7 @@ function Item() {
               </TouchableOpacity>
             </CloseView>
           </ContainerClose>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              marginTop: 0,
-            }}
-          >
+          <Wrapper>
             <View
               style={{
                 flex: 3,
@@ -83,6 +74,9 @@ function Item() {
               }}
             >
               <Image
+                style={{
+                  resizeMode: 'contain',
+                }}
                 source={{
                   uri: `https://image.tmdb.org/t/p/w500/${data.image}`,
                 }}
@@ -90,14 +84,14 @@ function Item() {
             </View>
             <View
               style={{
-                flex: 7,
+                flex: Math.round(ScreenHeight) >= 737 ? 4 : 7,
                 margin: 1,
                 padding: 0,
               }}
             >
               <Text numberOfLines={3}>{data.description}</Text>
             </View>
-          </View>
+          </Wrapper>
 
           <ItemButtons data={data} navigation={navigation} />
         </Content>
@@ -108,6 +102,12 @@ function Item() {
 
 const ItemMemo = React.memo(Item, () => {});
 export default ItemMemo;
+const Wrapper = styled.View`
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 0;
+`;
 const Container = styled.View`
   position: absolute;
   background-color: white;
@@ -121,13 +121,13 @@ const AnimatedContainer = Animated.createAnimatedComponent(Container);
 const Logo = styled.Image``;
 const Text = styled.Text`
   color: #fff;
-  font-size: 13px;
+  font-size: ${Math.round(screenWidth) >= 737 ? '24px' : '13px'};
   font-style: italic;
-  width: 200px;
+  width: ${Math.round(screenWidth) >= 737 ? '400px' : '200px'};
 `;
 const Content = styled.View`
   height: ${Math.round(ScreenHeight)}px;
-  background: #24243c;
+  background: #2b2c4c;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 5px;
@@ -149,8 +149,8 @@ const CloseView = styled.View`
 `;
 
 const Image = styled.Image`
-  width: 100px;
-  height: 150px;
+  width: ${Math.round(screenWidth) >= 737 ? '300px' : '100px'};
+  height: ${Math.round(ScreenHeight) >= 737 ? '350px' : '150px'};
   padding: 0;
   margin: 0;
   border-radius: 2px;
