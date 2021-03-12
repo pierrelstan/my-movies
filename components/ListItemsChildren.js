@@ -1,11 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { CloseItem, OpenItem } from '../redux/actions/openitemAction';
+import { OpenItem } from '../redux/actions/openitemAction';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getItemModal } from '../redux/actions/itemModalAction';
 import imagelogo from '../assets/imageLogo.jpg';
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const Item = ({
   title,
@@ -72,8 +74,8 @@ const renderItem = ({ item }) => {
 };
 export default renderItem;
 const Image = styled.Image`
-  width: 100px;
-  height: 150px;
+  width: ${Math.round(screenWidth) >= 737 ? '300px' : '100px'};
+  height: ${Math.round(screenWidth) >= 737 ? '450px' : '150px'};
   padding: 0;
   margin: 0;
   border-radius: 2px;
