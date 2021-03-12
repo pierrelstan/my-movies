@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Text, StatusBar, View, Animated, Dimensions } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styled from 'styled-components';
 import { useFocusEffect } from '@react-navigation/native';
@@ -7,7 +8,7 @@ import { saveState } from '../assets/asyncStorage/asyncStorage';
 
 const ScreenHeight = Dimensions.get('screen').height;
 const ScreenWidth = Dimensions.get('screen').width;
-console.log(ScreenHeight);
+
 export default function SignUp({ navigation }) {
   const TopAnim = useRef(new Animated.Value(ScreenHeight)).current;
   const LeftAnim = useRef(new Animated.Value(ScreenHeight)).current;
@@ -20,6 +21,15 @@ export default function SignUp({ navigation }) {
     confirmPassword: '',
   });
 
+  React.useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.setItem('state', JSON.stringify(user));
+        return value;
+      } catch (e) {}
+    };
+    getData();
+  }, [user]);
   useFocusEffect(
     React.useCallback(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -52,6 +62,7 @@ export default function SignUp({ navigation }) {
   const hanldeSubmit = () => {
     const { firstname, lastname, email, password, confirmPassword } = user;
     saveState({ firstname, lastname, email, password, confirmPassword });
+    navigation.push('Login');
   };
   return (
     <Container>
