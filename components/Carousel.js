@@ -65,9 +65,6 @@ const CarouselHero = () => {
     isLoading: state.upcomingMovies.isLoading,
   }));
 
-  useEffect(() => {
-    movies.reverse();
-  }, []);
   const renderItem = ({ item }, parallaxProps) => {
     return (
       <ItemMemo
@@ -93,7 +90,7 @@ const CarouselHero = () => {
           sliderWidth={screenWidth}
           sliderHeight={screenWidth}
           itemWidth={screenWidth - 100}
-          data={movies}
+          data={movies.reverse()}
           renderItem={renderItem}
           hasParallaxImages={true}
           layout={'default'}
