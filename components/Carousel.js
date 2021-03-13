@@ -90,7 +90,7 @@ const CarouselHero = () => {
           sliderWidth={screenWidth}
           sliderHeight={screenWidth}
           itemWidth={screenWidth - 100}
-          data={movies.reverse()}
+          data={movies}
           renderItem={renderItem}
           hasParallaxImages={true}
           layout={'default'}
