@@ -120,7 +120,8 @@ function ItemButtons({ data, navigation }) {
 
 export default ItemButtons;
 
-const Container = styled.View``;
+const Container = styled.View`
+  background: #2b2c4c;`;
 const ContainerIconsPlus = styled.View``;
 const WrapperIconsPlus = styled.View`
   justify-content: center;
