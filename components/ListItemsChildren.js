@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getItemModal } from '../redux/actions/itemModalAction';
 import imagelogo from '../assets/imageLogo.jpg';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
 
 const Item = ({
   title,
