@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { View, Text } from 'react-native';
-import axios from 'axios';
+import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTrendingMovies } from '../redux/actions/trendingMoviesAction';
 import { FlatList } from 'react-native-gesture-handler';
 import renderItem from './ListItemsChildren';
 import { getMostPopularMovies } from '../redux/actions/moviesAction';
@@ -14,7 +11,7 @@ import { Title } from './styles/styles';
 
 export default function MostPopularMovies() {
   const dispatch = useDispatch();
-  const { movies, page, totalPages, isLoading } = useSelector((state) => ({
+  const { movies, isLoading } = useSelector((state) => ({
     movies: state.movies.movies,
     page: state.movies.page,
     totalPages: state.movies.totalPages,
@@ -27,7 +24,6 @@ export default function MostPopularMovies() {
       axiosService.CancelToken;
     };
   }, []);
-
   // const memoizeRenderItem = React.useMemo(() => renderItem);
   return (
     <View>
