@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
 import {
   createStackNavigator,
-  HeaderBackButton,
 } from '@react-navigation/stack';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
@@ -77,26 +75,9 @@ function HomeStackNavigation() {
           name='Trailer'
           options={{
             headerTitle: false,
-            headerTransparent: true,
-            tabBarVisible: false,
+            tabBarVisible: true,
             animationEnabled: false,
-            headerTintColor: '#fff',
-            headerLeft: (props) => {
-              return (
-                <View
-                  style={{
-                    backgroundColor: 'rgba(3,3,0,1)',
-                    borderRadius: 50,
-                    margin: 3,
-                    height: 50,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <HeaderBackButton {...props} />
-                </View>
-              );
-            },
+            headerTintColor: '#333',
           }}
           component={PreviewVideo}
         />
