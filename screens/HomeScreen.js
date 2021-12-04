@@ -7,7 +7,6 @@ import {
   Dimensions,
 } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/stack';
-import * as ScreenOrientation from 'expo-screen-orientation';
 import styled from 'styled-components';
 import ItemMemo from '../components/Item';
 import CarouseHero from '../components/Carousel';
@@ -22,27 +21,7 @@ if (ScreenWidth >= 320) {
 }
 
 export default function HomeScreen({ navigation }) {
-  const [state, setState] = React.useState();
-
   const height = useHeaderHeight();
-
-  useEffect(() => {
-    ScreenOrientation.getOrientationAsync().then((data) => setState({ data }));
-
-    async function changeScreenOrientation() {
-      let ScreenType =
-        Math.round(ScreenWidth) >= 900
-          ? ScreenOrientation.OrientationLock.PORTRAIT_UP
-          : ScreenOrientation.OrientationLock.PORTRAIT;
-
-      await ScreenOrientation.lockAsync(ScreenType);
-    }
-
-    navigation.addListener('focus', () => {
-      changeScreenOrientation();
-    });
-  }, [ScreenWidth]);
-
   return (
     <View
       style={{
