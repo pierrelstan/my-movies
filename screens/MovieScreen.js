@@ -23,11 +23,11 @@ const DisplayListColor = ({ id }) => {
     listMovies: state.listMovies.listMovies,
   }));
   useEffect(() => {
-    function fv() {
+    function findMovie() {
       let index = listMovies.findIndex((item) => item.id === id) !== -1;
       setActive(index);
     }
-    fv();
+    findMovie();
   }, [listMovies.length]);
 
   return (
@@ -62,9 +62,8 @@ export default function MovieScreen({ route, navigation }) {
     navigation.addListener('focus', () => {
       changeScreenOrientation();
       dispatch(getMovie(id));
-    }),
-      [id];
-  });
+    })
+  }, [id]);
 
   const _shareFilm = () => {
     Share.share({
