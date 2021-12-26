@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Dimensions } from 'react-native';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { OpenItem } from '../redux/actions/openitemAction';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { getItemModal } from '../redux/actions/itemModalAction';
-import imagelogo from '../assets/imageLogo.jpg';
+import logo from '../assets/imageLogo.jpg';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
 
-const Item = ({
+const Item = memo(({
   title,
   image,
   id,
@@ -51,13 +51,13 @@ const Item = ({
               source={{ uri: `https://image.tmdb.org/t/p/w500/${image}` }}
             />
           ) : (
-            <Image source={imagelogo} />
+            <Image source={logo} />
           )}
         </TouchableOpacity>
       </ContainerImage>
     </View>
   );
-};
+});
 const renderItem = ({ item }) => {
   return (
     <Item
