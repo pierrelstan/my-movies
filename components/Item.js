@@ -5,6 +5,7 @@ import {
   Dimensions,
   View,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -32,7 +33,7 @@ function Item() {
     if (mounted) {
       if (action === true) {
         Animated.spring(TopAnim, {
-          toValue: Math.round(ScreenHeight) / 2.9,
+          toValue: Math.round(Platform.OS === 'ios'? ScreenHeight : ScreenHeight - 400 ) / 3,
           duration: 0,
           useNativeDriver: true,
         }).start();
@@ -58,7 +59,7 @@ function Item() {
     <AnimatedContainer style={{ transform: [{ translateY: TopAnim }] }}>
       <SafeAreaView>
         <Content>
-          <Logo />
+          {/* <Logo /> */}
           <ContainerClose>
             <CloseView>
               <TouchableOpacity onPress={() => toggleClose()}>
@@ -67,33 +68,21 @@ function Item() {
             </CloseView>
           </ContainerClose>
           <Wrapper>
-            <View
-              style={{
-                flex: 3,
-                margin: 10,
-              }}
-            >
+          <View>
               <Image
                 style={{
-                  resizeMode: 'contain',
+                aspectRatio: 0.5 / 1,
                 }}
                 source={{
                   uri: `https://image.tmdb.org/t/p/w500/${data.image}`,
                 }}
               />
-            </View>
-            <View
-              style={{
-                flex: Math.round(ScreenHeight) >= 737 ? 4 : 7,
-                margin: 1,
-                padding: 0,
-              }}
-            >
+             </View>
+            <View>
               <Text numberOfLines={3}>{data.description}</Text>
             </View>
-          </Wrapper>
-
-          <ItemButtons data={data} navigation={navigation} />
+            </Wrapper>
+            <ItemButtons data={data} navigation={navigation} />
         </Content>
       </SafeAreaView>
     </AnimatedContainer>
@@ -102,14 +91,16 @@ function Item() {
 
 const ItemMemo = React.memo(Item, () => {});
 export default ItemMemo;
+
 const Wrapper = styled.View`
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 0;
 `;
 const Container = styled.View`
+  background: #2b2c4c;
   position: absolute;
   background-color: white;
   width: 100%;
@@ -119,14 +110,14 @@ const Container = styled.View`
   border-top-right-radius: 10px;
 `;
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
-const Logo = styled.Image``;
+
 const Text = styled.Text`
   color: #fff;
   font-size: ${Math.round(screenWidth) >= 737 ? '24px' : '13px'};
   font-style: italic;
-  width: ${Math.round(screenWidth) >= 737 ? '400px' : '200px'};
 `;
 const Content = styled.View`
+  width: 100%;
   height: ${Math.round(ScreenHeight)}px;
   background: #2b2c4c;
   border-top-left-radius: 10px;
@@ -150,9 +141,7 @@ const CloseView = styled.View`
 `;
 
 const Image = styled.Image`
-  width: ${Math.round(screenWidth) >= 737 ? '300px' : '100px'};
-  height: ${Math.round(ScreenHeight) >= 737 ? '350px' : '150px'};
+  height: 250px;
   padding: 0;
   margin: 0;
-  border-radius: 2px;
 `;

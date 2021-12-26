@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { FlatList } from 'react-native';
-import imagelogo from '../assets/imageLogo.jpg';
+import image from '../assets/imageLogo.jpg';
 
 const { width: ScreenWidth } = Dimensions.get('window');
 
-let numColumns = 3;
+let numColumns = 2;
 export default function MyList({ navigation }) {
   const { myListMovies } = useSelector((state) => ({
     myListMovies: state.listMovies.listMovies,
@@ -16,9 +16,8 @@ export default function MyList({ navigation }) {
   const [data, setData] = React.useState([]);
   React.useEffect(() => {
     setData(myListMovies);
-  }, []);
+  }, [myListMovies.length]);
   const handleItem = (item) => {
-    let key = item.id;
     let title = item.title;
     let image = item.poster_path;
     let id = item.id;
@@ -43,31 +42,30 @@ export default function MyList({ navigation }) {
         data={data}
         numColumns={numColumns}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity onPress={() => handleItem(item)}>
               <View
                 key={item.id}
-                style={{
-                  // backgroundColor: '#444',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
               >
                 {item.poster_path ? (
                   <Image
                     style={{
                       aspectRatio:
-                        ScreenWidth === 360
-                          ? 0.8
-                          : Math.round(ScreenWidth) === 411
-                          ? 0.9
+                      Math.round(ScreenWidth) === 360
+                          ? 0.5
+                          : Math.round(ScreenWidth)
+                          ? 0.6
                           : 1,
                       flex: 1 / numColumns,
-                      width: 100,
-                      height: 150,
-                      resizeMode: 'contain',
-                      marginVertical: 8,
+                      width: 50,
+                      height: 300,
+                      resizeMode: 'cover',
+                      marginVertical: 4,
+                      marginHorizontal: 3,
+                      marginLeft:  Math.round(ScreenWidth) <= 360 ? 20 : 10,
+                      marginRight:0,
                     }}
                     source={{
                       uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`,
@@ -75,7 +73,7 @@ export default function MyList({ navigation }) {
                   />
                 ) : (
                   <Image
-                    source={imagelogo}
+                    source={image}
                     style={{
                       aspectRatio:
                         ScreenWidth === 360
@@ -84,7 +82,7 @@ export default function MyList({ navigation }) {
                           ? 0.9
                           : 1,
                       flex: 1 / numColumns,
-                      width: 100,
+                      width: 40,
                       height: 150,
                       resizeMode: 'contain',
                       marginVertical: 8,

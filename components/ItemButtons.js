@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,13 +11,14 @@ const DisplayListColor = ({ id }) => {
   const { listMovies } = useSelector((state) => ({
     listMovies: state.listMovies.listMovies,
   }));
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     function fv() {
       let index = listMovies.findIndex((item) => item.id === id) !== -1;
       setActive(index);
     }
     fv();
-  }, [listMovies.length]);
+  });
 
   return (
     <ContainerIconsPlus>
@@ -118,9 +119,11 @@ function ItemButtons({ data, navigation }) {
   );
 }
 
+
 export default ItemButtons;
 
-const Container = styled.View``;
+const Container = styled.View`
+  background: #2b2c4c;`;
 const ContainerIconsPlus = styled.View``;
 const WrapperIconsPlus = styled.View`
   justify-content: center;
