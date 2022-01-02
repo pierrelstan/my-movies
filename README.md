@@ -32,6 +32,8 @@ The main functionalities of the app are:
 - [The moviedb](https://www.themoviedb.org/) as external Api
 
 \
+# Upcoming changes:
+- Add Typescript
 &nbsp;
 # Tool Used for the Project
 - [Github](https://github.com) Version control
