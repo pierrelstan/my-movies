@@ -34,6 +34,7 @@ The main functionalities of the app are:
 \
 # Upcoming changes:
 - Add Typescript
+
 &nbsp;
 # Tool Used for the Project
 - [Github](https://github.com) Version control
