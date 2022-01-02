@@ -10,7 +10,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styled from 'styled-components';
 import { useFocusEffect } from '@react-navigation/native';
-import { saveState } from '../assets/asyncStorage/asyncStorage';
 import LoadingSuccessAnimation from './LoadingSuccessAnimtion';
 import moviePoster from '../assets/moviesposter.jpg';
 
@@ -27,8 +26,8 @@ export default function Login({ navigation }) {
   });
   const [active, setActive] = React.useState(false);
   const [state, setState] = React.useState({
-    email: '',
-    password: '',
+    email: 'test@example.com',
+    password: '12345678',
   });
 
   React.useEffect(() => {
