@@ -26,7 +26,6 @@ The main functionalities of the app are:
 &nbsp;
 # Tech Stack:
 - [Expo,React-Native ](https://docs.expo.dev/)
--
 - [React-Navigation](https://reactnavigation.org/) for navigation
 - [Redux](https://redux.js.org/) as state management
 - [The moviedb](https://www.themoviedb.org/) as external Api
