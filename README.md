@@ -14,7 +14,7 @@
 \
 &nbsp;
 # Description:
-lo-movie is a movie app for small stores that clients can  can watch movie anytime.
+Lo-movie is a movie app that users can watch movies.
 
 The main functionalities of the app are:
 - Sign In
@@ -32,8 +32,6 @@ The main functionalities of the app are:
 - [The moviedb](https://www.themoviedb.org/) as external Api
 
 \
-# Upcoming changes:
-- Add Typescript
 
 &nbsp;
 # Tool Used for the Project
