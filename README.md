@@ -11,7 +11,6 @@
  <img src="https://user-images.githubusercontent.com/23443242/147892142-25db7f3d-805a-449a-87fb-2c0cf9c0484d.png" width="400" height="900" text-align="center">
  </div>
 
-\
 &nbsp;
 # Description:
 Lo-movie is a movie app that users can watch movies.
@@ -22,7 +21,6 @@ The main functionalities of the app are:
 - Add / remove to list
 - Play movie
 
-
 &nbsp;
 # Tech Stack:
 - [Expo,React-Native ](https://docs.expo.dev/)
@@ -30,21 +28,15 @@ The main functionalities of the app are:
 - [Redux](https://redux.js.org/) as state management
 - [The moviedb](https://www.themoviedb.org/) as external Api
 
-\
 
 &nbsp;
 # Tool Used for the Project
 - [Github](https://github.com) Version control
 
-\
-&nbsp;
-
-\
 &nbsp;
 # Installation:
 `yarn install`
 
-\
 &nbsp;
 
 # Usage:
@@ -52,7 +44,6 @@ After all the packages has been successfully installed, you can run:
 
  `expo start`
 
-\
 &nbsp;
  To log in the app use:
 `username: test@example.com`
