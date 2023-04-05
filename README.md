@@ -4,12 +4,12 @@
 
 
 ## The following  different stages of the app.
-<div align=center>
- <img src="https://user-images.githubusercontent.com/23443242/147891936-156e4a97-69b1-48d6-87ac-f047f3f13cd6.png" width="400" height="900" text-align="center">
-</div>
- <div align=center>
- <img src="https://user-images.githubusercontent.com/23443242/147892142-25db7f3d-805a-449a-87fb-2c0cf9c0484d.png" width="400" height="900" text-align="center">
- </div>
+
+ ![loMovieLogin1](https://user-images.githubusercontent.com/23443242/230166670-b054aaeb-0fda-4bf9-8e3d-d73160a49684.png)
+
+
+ ![loMovie](https://user-images.githubusercontent.com/23443242/230166216-a9b61145-e2b5-4910-91ac-725b337f0cc9.png)
+
 
 &nbsp;
 # Description:
