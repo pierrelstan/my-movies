@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Provider } from "react-redux";
 import store from "./redux/store/store";
 import AppStack from "./Navigations/AppStack";
-import { Text, View } from "react-native";
 import AppContext from "./context/AppContext";
 
 // import { LogBox } from "react-native";

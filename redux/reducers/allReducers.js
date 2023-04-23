@@ -10,7 +10,7 @@ import searchMovies from './searchMoviesReducer';
 import listMovies from './addToListReducer';
 import avatar from './avatarReducer';
 const allReducers = combineReducers({
-  
+
   avatar: avatar,
   listMovies: listMovies,
   searchMovies: searchMovies,

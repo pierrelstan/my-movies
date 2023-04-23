@@ -107,7 +107,6 @@ function Item() {
 }
 
 const ItemMemo = React.memo(Item, () => {});
-
 export default ItemMemo;
 
 const Wrapper = styled.View`
