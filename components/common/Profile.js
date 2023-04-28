@@ -1,11 +1,6 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  ImageBackground,
-  Pressable,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ImageBackground, Pressable, View } from "react-native";
 
 export default function Profile() {
   const navigation = useNavigation();
@@ -18,7 +13,7 @@ export default function Profile() {
         flexDirection: "row",
         justifyContent: "flex-end",
         marginHorizontal: 10,
-        marginBottom: 10,
+        marginBottom: 5,
       }}
     >
       <Pressable

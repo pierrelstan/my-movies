@@ -1,10 +1,14 @@
 import React from "react";
-import { View, Dimensions } from "react-native";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import { View } from "react-native";
 
 export default function CarouselSkeleton() {
   return (
-    <SkeletonPlaceholder backgroundColor="#383958" highlightColor="#666">
+    <View
+      style={{
+        backgroundColor: "#383958",
+        highlightColor: "#666",
+      }}
+    >
       <View
         style={{
           flexDirection: "row",
@@ -19,7 +23,13 @@ export default function CarouselSkeleton() {
             height: 350,
           }}
         />
+        <View
+          style={{
+            width: 220,
+            height: 350,
+          }}
+        />
       </View>
-    </SkeletonPlaceholder>
+    </View>
   );
 }

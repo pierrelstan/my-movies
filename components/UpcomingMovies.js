@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { FlatList } from "react-native-gesture-handler";
-import renderItem from "./ListItemsChildren";
+import renderItem from "./RenderItem";
 import { getUpcomingMovies } from "../redux/actions/upcomingMoviesAction";
 import axiosService from "../assets/ServicesAxios/axiosService";
 import MoviesSkeleton from "./MoviesSkeleton";
 import TitleSkeleton from "./TitleSkeleton";
 import { Title } from "./styles/styles";
+import List from "./common/List";
 
 export default function UpcomingMovies() {
   const dispatch = useDispatch();
@@ -34,19 +33,12 @@ export default function UpcomingMovies() {
       {isLoading ? (
         <MoviesSkeleton />
       ) : (
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
+        <List
           data={upcomingMovies}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          refreshing={isLoading}
           onEndReachedThreshold={0.2}
           initialNumToRender={10}
-          refreshing={true}
-          style={{
-            margin: 0,
-            padding: 0,
-          }}
+          item={renderItem}
         />
       )}
     </View>

@@ -48,16 +48,15 @@ const LoadingSuccessAnimation = (props) => {
     <AnimatedContainer
       styled={{
         top: top,
-        opacity: opacity,
       }}
     >
       <LottieView
-        source={require('../assets/SVG/1918-loading-and-done.json')}
+        source={require("../assets/SVG/1918-loading-and-done.json")}
         autoPlay={false}
         loop={false}
         ref={animation}
       />
-      <StatusBar backgroundColor='#24243C' barStyle='auto' />
+      <StatusBar backgroundColor="#24243C" barStyle="auto" />
     </AnimatedContainer>
   );
 };

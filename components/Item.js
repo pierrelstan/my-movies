@@ -20,13 +20,13 @@ const screenWidth = Dimensions.get("window").width;
 
 function Item() {
   const [data, setData] = useState({});
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const TopAnim = useRef(new Animated.Value(ScreenHeight)).current;
+
   const { action, item } = useSelector((state) => ({
     action: state.openitem.action,
     item: state.item,
   }));
-  const dispatch = useDispatch();
-  const TopAnim = useRef(new Animated.Value(ScreenHeight)).current;
 
   useEffect(() => {
     dispatch(CloseItem());
@@ -35,7 +35,7 @@ function Item() {
   useEffect(() => {
     if (action) {
       Animated.timing(TopAnim, {
-        toValue: ScreenHeight / 3.5,
+        toValue: ScreenHeight / 5.5,
         duration: 100,
         useNativeDriver: true,
       }).start();
@@ -57,6 +57,7 @@ function Item() {
   const toggleClose = () => {
     dispatch(CloseItem());
   };
+
   return (
     <AnimatedContainer style={{ transform: [{ translateY: TopAnim }] }}>
       <SafeAreaView>
@@ -147,7 +148,6 @@ const CloseView = styled.View`
   justify-content: center;
   align-items: center;
   border-radius: 22px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const Image = styled.Image`

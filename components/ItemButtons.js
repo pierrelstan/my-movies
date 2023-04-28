@@ -9,19 +9,27 @@ import AppContext from "../context/AppContext";
 const DisplayListColor = (props) => {
   const { favorites, setFavorites } = useContext(AppContext);
 
-  const handleToggleFavorite = (data) => {
-    if (favorites.favorites.includes(data.id)) {
-      setFavorites({
-        favorites: favorites.favorites.filter((favId) => favId !== data.id),
-        ids: favorites.ids.filter((id) => id !== data.id),
-      });
-    } else {
-      setFavorites({
-        favorites: [...favorites.favorites, data],
-        ids: [...favorites.ids, data.id],
-      });
-    }
-  };
+        console.log(
+          favorites.favorites.filter((favId) => {
+            return favId !== props.data;
+          })
+        );
+        const handleToggleFavorite = (data) => {
+          // console.log(data);
+          if (favorites.favorites.includes(data.id)) {
+            setFavorites({
+              favorites: favorites.favorites.filter(
+                (favId) => favId !== data.id
+              ),
+              ids: favorites.ids.filter((id) => id !== data.id),
+            });
+          } else {
+            setFavorites({
+              favorites: [...favorites.favorites, data.id],
+              ids: [...favorites.ids, data.id],
+            });
+          }
+        };
 
   const icons = favorites.ids.includes(props.data.id)
     ? "favorite"

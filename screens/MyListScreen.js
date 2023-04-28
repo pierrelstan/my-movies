@@ -20,6 +20,11 @@ let numColumns = 2;
 export default function MyList() {
   const navigation = useNavigation();
 
+  // const { listMovies, isLoading } = useSelector((state) => ({
+  //   listMovies: state.ListMovies.trendingMovies,
+  //   isLoading: state.trendingMovies.isLoading,
+  // }));
+
   const { favorites, setFavorites } = useContext(AppContext);
   console.log(favorites);
 
