@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, Dimensions } from 'react-native';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-const screenWidth = Dimensions.get('window').width;
+import { View, Dimensions, StyleSheet } from "react-native";
+
+const screenWidth = Dimensions.get("window").width;
 
 export default function MoviesSkeleton() {
   return (
-    <SkeletonPlaceholder backgroundColor='#383958' highlightColor='#666'>
+    <View style={styles.container}>
       <View
         style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <View
@@ -42,6 +42,13 @@ export default function MoviesSkeleton() {
           }}
         />
       </View>
-    </SkeletonPlaceholder>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#383958",
+    highlightColor: "#666",
+  },
+});

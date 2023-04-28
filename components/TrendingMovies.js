@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getTrendingMovies } from "../redux/actions/trendingMoviesAction";
-import { FlatList } from "react-native-gesture-handler";
-import renderItem from "./ListItemsChildren";
+import renderItem from "./RenderItem";
 import axiosService from "../assets/ServicesAxios/axiosService";
 import { Title } from "./styles/styles";
 import TitleSkeleton from "./TitleSkeleton";
 import MoviesSkeleton from "./MoviesSkeleton";
+import List from "./common/List";
 
 export default function TrendingMovies() {
   const dispatch = useDispatch();
@@ -27,27 +27,18 @@ export default function TrendingMovies() {
 
   return (
     <View>
-      <View></View>
-
       <View>
         {isLoading && <TitleSkeleton />}
         {!isLoading && <Title>Trending Now</Title>}
       </View>
       {isLoading && <MoviesSkeleton />}
       {!isLoading && (
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
+        <List
           data={trendingMovies}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-          onEndReachedThreshold={0.5}
+          refreshing={isLoading}
+          onEndReachedThreshold={0.2}
           initialNumToRender={10}
-          refreshing={true}
-          style={{
-            margin: 0,
-            padding: 0,
-          }}
+          item={renderItem}
         />
       )}
     </View>

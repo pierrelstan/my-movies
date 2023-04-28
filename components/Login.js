@@ -1,39 +1,39 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 import {
   Text,
   StatusBar,
   Animated,
   Dimensions,
   ImageBackground,
-} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import styled from 'styled-components';
-import { useFocusEffect } from '@react-navigation/native';
-import LoadingSuccessAnimation from './LoadingSuccessAnimtion';
-import moviePoster from '../assets/moviesposter.jpg';
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import styled from "styled-components";
+import { useFocusEffect } from "@react-navigation/native";
+import LoadingSuccessAnimation from "./LoadingSuccessAnimtion";
+import moviePoster from "../assets/moviesposter.jpg";
 
-const ScreenHeight = Dimensions.get('screen').height;
-const ScreenWidth = Dimensions.get('screen').width;
+const ScreenHeight = Dimensions.get("screen").height;
+const ScreenWidth = Dimensions.get("screen").width;
 
 export default function Login({ navigation }) {
   const TopAnim = useRef(new Animated.Value(ScreenHeight)).current;
   const LeftAnim = useRef(new Animated.Value(ScreenHeight)).current;
 
   const [user, setUser] = React.useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [active, setActive] = React.useState(false);
   const [state, setState] = React.useState({
-    email: 'test@example.com',
-    password: '12345678',
+    email: "test@example.com",
+    password: "12345678",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getData = async () => {
       try {
-        const value = await AsyncStorage.getItem('state');
+        const value = await AsyncStorage.getItem("state");
 
         if (value !== null) {
           let data = JSON.parse(value);
@@ -51,7 +51,7 @@ export default function Login({ navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      const unsubscribe = navigation.addListener('focus', () => {
+      const unsubscribe = navigation.addListener("focus", () => {
         Animated.parallel([
           Animated.spring(TopAnim, {
             toValue: Math.round(ScreenHeight / 8),
@@ -67,11 +67,11 @@ export default function Login({ navigation }) {
       });
 
       return unsubscribe;
-    }, [navigation]),
+    }, [navigation])
   );
 
   const handleSignUp = () => {
-    navigation.push('SignUp');
+    navigation.push("SignUp");
   };
   const onChangeText = (name) => {
     return (text) => {
@@ -87,7 +87,7 @@ export default function Login({ navigation }) {
 
     setTimeout(() => {
       if (email === state.email && password === state.password) {
-        navigation.push('Home');
+        navigation.push("Home");
         setActive(false);
       }
     }, 200);
@@ -111,13 +111,13 @@ export default function Login({ navigation }) {
           style={{
             transform: [{ translateY: TopAnim }],
             paddingHorizontal: 10,
-            flexDirection: 'column',
+            flexDirection: "column",
           }}
         >
           <WrapperInput>
             <Text
               style={{
-                color: '#b6b133',
+                color: "#b6b133",
                 fontSize: 18,
                 padding: 5,
               }}
@@ -125,9 +125,9 @@ export default function Login({ navigation }) {
               Email :
             </Text>
             <Input
-              name='email'
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={onChangeText('email')}
+              name="email"
+              style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+              onChangeText={onChangeText("email")}
               value={user.email}
               onSubmitEditing={() => hanldeSubmit()}
             />
@@ -135,7 +135,7 @@ export default function Login({ navigation }) {
           <WrapperInput>
             <Text
               style={{
-                color: '#b6b133',
+                color: "#b6b133",
                 fontSize: 18,
                 padding: 5,
               }}
@@ -143,9 +143,9 @@ export default function Login({ navigation }) {
               Password :
             </Text>
             <Input
-              name='password'
-              style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={onChangeText('password')}
+              name="password"
+              style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+              onChangeText={onChangeText("password")}
               value={user.password}
               onSubmitEditing={() => hanldeSubmit()}
               secureTextEntry={true}
@@ -165,7 +165,7 @@ export default function Login({ navigation }) {
         </AnimatedContainerInput>
         {active && <LoadingSuccessAnimation active={active} />}
       </Wrapper>
-      <StatusBar backgroundColor='#383958' barStyle='auto' />
+      <StatusBar backgroundColor="#383958" barStyle="auto" />
     </Container>
   );
 }
@@ -203,7 +203,6 @@ const Title = styled.Text`
   font-size: 52px;
   color: #b6b133;
   font-weight: bold;
-  /* text-transform: uppercase; */
 `;
 const ContainerTitle = styled.View`
   flex: 1;

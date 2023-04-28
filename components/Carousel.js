@@ -1,127 +1,100 @@
-import React, { useRef } from "react";
+import React, { memo } from "react";
+import { StyleSheet, Dimensions, TouchableOpacity, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import Carousel, { ParallaxImage } from "react-native-snap-carousel";
-import styled from "styled-components/native";
-import {
-  View,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
 import { OpenItem } from "../redux/actions/openitemAction";
 import { getItemModal } from "../redux/actions/itemModalAction";
+import List from "./common/List";
 import CarouselSkeleton from "./CarouselSkeleton";
 
-const { width: screenWidth } = Dimensions.get("window");
-console.log(screenWidth - 60);
-const Item = ({
-  id,
-  image,
-  description,
-  title,
-  voteCount,
-  voteAverage,
-  dateRelease,
-  parallaxProps,
-}) => {
-  const dispatch = useDispatch();
-  const ToggleOpenItem = () => {
-    dispatch(OpenItem());
-    dispatch(
-      getItemModal(
-        id,
-        image,
-        description,
-        title,
-        voteCount,
-        voteAverage,
-        dateRelease
-      )
-    );
-  };
-  return (
-    <TouchableOpacity onPress={() => ToggleOpenItem()}>
-      <ContainerItem>
-        <ParallaxImage
+const Item = memo(
+  ({ title, image, id, description, voteCount, voteAverage, dateRelease }) => {
+    const dispatch = useDispatch();
+
+    const ToggleOpenItem = () => {
+      dispatch(OpenItem());
+      dispatch(
+        getItemModal(
+          id,
+          image,
+          description,
+          title,
+          voteCount,
+          voteAverage,
+          dateRelease
+        )
+      );
+    };
+
+    return (
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.item}
+        onPress={() => {
+          ToggleOpenItem();
+        }}
+      >
+        <Image
           source={{
             uri: `https://image.tmdb.org/t/p/w500/${image}`,
           }}
-          containerStyle={styles.imageContainer}
-          style={styles.image}
-          parallaxFactor={0.3}
-          showSpinner={true}
-          {...parallaxProps}
+          style={styles.item}
         />
-      </ContainerItem>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    );
+  }
+);
+
+const renderItem = ({ item }) => {
+  return (
+    <Item
+      key={item.id}
+      title={item.title}
+      image={item.poster_path}
+      id={item.id}
+      description={item.overview}
+      voteAverage={item.vote_average}
+      voteCount={item.vote_count}
+      dateRelease={item.release_date}
+    />
   );
 };
-const ItemMemo = React.memo(Item);
-const CarouselHero = () => {
-  const carouselRef = useRef(null);
 
+export default function ImageCarousel() {
   const { movies, isLoading } = useSelector((state) => ({
     movies: state.upcomingMovies.upcomingMovies,
     isLoading: state.upcomingMovies.isLoading,
   }));
 
-  const renderItem = ({ item }, parallaxProps) => {
-    return (
-      <ItemMemo
-        key={item.id}
-        title={item.title}
-        image={item.poster_path}
-        id={item.id}
-        description={item.overview}
-        voteAverage={item.vote_average}
-        voteCount={item.vote_count}
-        dateRelease={item.release_date}
-        parallaxProps={parallaxProps}
-      />
-    );
-  };
   return (
-    <View style={styles.container}>
+    <>
       {isLoading && <CarouselSkeleton />}
       {!isLoading && (
-        <Carousel
-          ref={carouselRef}
-          sliderWidth={screenWidth}
-          sliderHeight={screenWidth}
-          itemWidth={screenWidth - 100}
+        <List
           data={movies}
-          renderItem={renderItem}
-          hasParallaxImages={true}
-          layout={"default"}
-          useScrollView={true}
+          refreshing={isLoading}
+          onEndReachedThreshold={0.2}
+          initialNumToRender={10}
+          item={renderItem}
         />
       )}
-    </View>
+    </>
   );
-};
-
-export default CarouselHero;
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  container: { paddingVertical: 20 },
+  carousel: {
+    aspectRatio: 1.5,
+    flexGrow: 0,
+    marginBottom: 20,
   },
-  item: {},
-  imageContainer: {
+  item: {
     flex: 1,
-    marginBottom: Platform.select({ ios: 0, android: 1 }),
-    backgroundColor: "rgba(0,0,0, 0.0)",
-    borderRadius: 8,
+    width: 250,
+    height: 380,
+    margin: 10,
   },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
+  imageBackground: {
+    flex: 2,
   },
 });
-
-const ContainerItem = styled.View`
-  width: ${Math.round(screenWidth - 100)}px;
-  height: ${Math.round(screenWidth - 60)}px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-`;

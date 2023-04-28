@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlatList } from 'react-native-gesture-handler';
-import renderItem from './ListItemsChildren';
-import { getMostPopularMovies } from '../redux/actions/moviesAction';
-import axiosService from '../assets/ServicesAxios/axiosService';
-import MoviesSkeleton from './MoviesSkeleton';
-import TitleSkeleton from './TitleSkeleton';
-import { Title } from './styles/styles';
+import renderItem from "./RenderItem";
+import { getMostPopularMovies } from "../redux/actions/moviesAction";
+import axiosService from "../assets/ServicesAxios/axiosService";
+import MoviesSkeleton from "./MoviesSkeleton";
+import TitleSkeleton from "./TitleSkeleton";
+import { Title } from "./styles/styles";
+import List from "./common/List";
 
 export default function MostPopularMovies() {
   const dispatch = useDispatch();
+
   const { movies, isLoading } = useSelector((state) => ({
     movies: state.movies.movies,
     page: state.movies.page,
@@ -32,19 +33,12 @@ export default function MostPopularMovies() {
       </View>
       {isLoading && <MoviesSkeleton />}
       {!isLoading && (
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
+        <List
           data={movies}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-          onEndReachedThreshold={0.5}
+          refreshing={isLoading}
+          onEndReachedThreshold={0.2}
           initialNumToRender={10}
-          refreshing={true}
-          style={{
-            margin: 0,
-            padding: 0,
-          }}
+          item={renderItem}
         />
       )}
     </View>
