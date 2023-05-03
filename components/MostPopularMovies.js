@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import renderItem from "./RenderItem";
 import { getMostPopularMovies } from "../redux/actions/moviesAction";
-import axiosService from "../assets/ServicesAxios/axiosService";
+import axiosService from "../utils/ServicesAxios/axiosService";
 import MoviesSkeleton from "./MoviesSkeleton";
 import TitleSkeleton from "./TitleSkeleton";
-import { Title } from "./styles/styles";
 import List from "./common/List";
+import Title from "./common/Title";
 
 export default function MostPopularMovies() {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export default function MostPopularMovies() {
     <View>
       <View>
         {isLoading && <TitleSkeleton />}
-        {!isLoading && <Title>Most Popular</Title>}
+        {!isLoading && <Title title="Most Popular" />}
       </View>
       {isLoading && <MoviesSkeleton />}
       {!isLoading && (
@@ -44,3 +44,5 @@ export default function MostPopularMovies() {
     </View>
   );
 }
+
+

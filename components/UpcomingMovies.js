@@ -3,11 +3,11 @@ import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import renderItem from "./RenderItem";
 import { getUpcomingMovies } from "../redux/actions/upcomingMoviesAction";
-import axiosService from "../assets/ServicesAxios/axiosService";
+import axiosService from "../utils/ServicesAxios/axiosService";
 import MoviesSkeleton from "./MoviesSkeleton";
 import TitleSkeleton from "./TitleSkeleton";
-import { Title } from "./styles/styles";
 import List from "./common/List";
+import Title from "./common/Title";
 
 export default function UpcomingMovies() {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export default function UpcomingMovies() {
   return (
     <View>
       <View>
-        {isLoading ? <TitleSkeleton /> : <Title>Upcoming Movies</Title>}
+        {isLoading ? <TitleSkeleton /> : <Title title="Upcoming Movies" />}
       </View>
       {isLoading ? (
         <MoviesSkeleton />

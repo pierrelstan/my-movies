@@ -5,6 +5,7 @@ import { OpenItem } from "../redux/actions/openitemAction";
 import { getItemModal } from "../redux/actions/itemModalAction";
 import List from "./common/List";
 import CarouselSkeleton from "./CarouselSkeleton";
+import Loading from "./common/Loading";
 
 const Item = memo(
   ({ title, image, id, description, voteCount, voteAverage, dateRelease }) => {
@@ -67,7 +68,7 @@ export default function ImageCarousel() {
 
   return (
     <>
-      {isLoading && <CarouselSkeleton />}
+      {isLoading && <Loading />}
       {!isLoading && (
         <List
           data={movies}

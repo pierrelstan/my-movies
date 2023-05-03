@@ -1,9 +1,9 @@
-import WebAPI from '../../assets/ServicesAxios/service';
+import WebAPI from "../../utils/ServicesAxios/service";
 import {
   GET_MOVIES_SUCCESS,
   LOADING_MOVIES_START,
   LOADING_MOVIES_FAILURE,
-} from '../types/types';
+} from "../types/types";
 
 export function getMostPopularMovies(page = 0) {
   return function (dispatch) {

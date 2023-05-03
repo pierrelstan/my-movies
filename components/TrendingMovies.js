@@ -3,11 +3,13 @@ import { View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getTrendingMovies } from "../redux/actions/trendingMoviesAction";
 import renderItem from "./RenderItem";
-import axiosService from "../assets/ServicesAxios/axiosService";
-import { Title } from "./styles/styles";
+import axiosService from "../utils/ServicesAxios/axiosService";
+
 import TitleSkeleton from "./TitleSkeleton";
 import MoviesSkeleton from "./MoviesSkeleton";
 import List from "./common/List";
+import Loading from "./common/Loading";
+import Title from "./common/Title";
 
 export default function TrendingMovies() {
   const dispatch = useDispatch();
@@ -29,9 +31,9 @@ export default function TrendingMovies() {
     <View>
       <View>
         {isLoading && <TitleSkeleton />}
-        {!isLoading && <Title>Trending Now</Title>}
+        {!isLoading && <Title title="Trending Now" />}
       </View>
-      {isLoading && <MoviesSkeleton />}
+      {isLoading && <Loading />}
       {!isLoading && (
         <List
           data={trendingMovies}

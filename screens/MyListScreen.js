@@ -13,6 +13,7 @@ import Profile from "../components/common/Profile";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import AppContext from "../context/AppContext";
+import { StatusBar } from "expo-status-bar";
 
 const { width: ScreenWidth } = Dimensions.get("window");
 
@@ -34,7 +35,8 @@ export default function MyList() {
   };
   return (
     <View style={styles.container}>
-      <View>
+      <StatusBar backgroundColor="#383958" barStyle="auto" />
+      <View style={{ marginTop: 30 }}>
         <Profile />
         <View style={styles.wrapperText}>
           <Text style={[styles.title, styles.color.text]}>

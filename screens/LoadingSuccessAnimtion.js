@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import styled from "styled-components";
 import LottieView from "lottie-react-native";
 import { Animated, Dimensions, StatusBar } from "react-native";
@@ -11,8 +11,7 @@ const LoadingSuccessAnimation = (props) => {
 
   let animation = React.useRef(null);
 
-  React.useEffect(() => {
-    // if (didMountRef.current) {
+  useEffect(() => {
     if (props.active) {
       Animated.sequence([
         Animated.timing(top, {
@@ -42,14 +41,26 @@ const LoadingSuccessAnimation = (props) => {
       ]).start();
       animation.current.loop = false;
     }
-  }, [props.isActive]);
+  }, [props.active]);
 
   return (
-    <AnimatedContainer
-      styled={{
-        top: top,
-        opacity: opacity,
-      }}
+    <Animated.View
+      styled={[
+        {
+          top: top,
+          opacity: opacity,
+        },
+        {
+          width: "100%",
+          height: "100%",
+          background: "#24243c",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          top: 0,
+          left: 0,
+        },
+      ]}
     >
       <LottieView
         source={require("../assets/SVG/1918-loading-and-done.json")}
@@ -58,19 +69,8 @@ const LoadingSuccessAnimation = (props) => {
         ref={animation}
       />
       <StatusBar backgroundColor="#24243C" barStyle="auto" />
-    </AnimatedContainer>
+    </Animated.View>
   );
 };
 
 export default LoadingSuccessAnimation;
-const Container = styled.View`
-  width: 100%;
-  height: 100%;
-  background: #24243c;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-const AnimatedContainer = Animated.createAnimatedComponent(Container);

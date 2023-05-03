@@ -1,5 +1,5 @@
 import axios from 'axios';
-import WebAPI from '../../assets/ServicesAxios/service';
+import WebAPI from "../../utils/ServicesAxios/service";
 import { GET_SEARCH_MOVIES } from '../types/types';
 
 export function getSearchMovies(SearchText, page = 0) {

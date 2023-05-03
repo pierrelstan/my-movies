@@ -1,5 +1,5 @@
 import axios from "axios";
-import WebAPI from "../../assets/ServicesAxios/service";
+import WebAPI from "../../utils/ServicesAxios/service";
 import {
   GET_MOVIES_TRENDING_SUCCESS,
   LOADING_MOVIES_TRENDING_START,
