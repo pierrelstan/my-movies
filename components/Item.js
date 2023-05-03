@@ -6,10 +6,11 @@ import {
   SafeAreaView,
   Easing,
   Pressable,
+  Image,
+  Text,
+  StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { CloseItem } from "../redux/actions/openitemAction";
 import { useState } from "react";
@@ -17,7 +18,6 @@ import ItemButtons from "./ItemButtons";
 
 const ScreenHeight = Dimensions.get("screen").height;
 const screenWidth = Dimensions.get("window").width;
-
 function Item() {
   const [data, setData] = useState({});
   const dispatch = useDispatch();
@@ -59,28 +59,25 @@ function Item() {
   };
 
   return (
-    <AnimatedContainer style={{ transform: [{ translateY: TopAnim }] }}>
+    <Animated.View
+      style={{
+        transform: [{ translateY: TopAnim }],
+        ...styles.container,
+      }}
+    >
       <SafeAreaView>
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "#2b2c4c",
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
-          }}
-        >
+        <View style={styles.wrapper}>
           <Pressable
             onPress={() => toggleClose()}
             style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
           >
-            <ContainerClose>
-              <CloseView>
+            <View style={styles.wrapperClose}>
+              <View style={styles.closeView}>
                 <Ionicons name="ios-close" size={24} color="#fff" />
-              </CloseView>
-            </ContainerClose>
+              </View>
+            </View>
           </Pressable>
-          <Wrapper>
+          <View style={styles.content}>
             <Image
               style={{
                 aspectRatio: 1,
@@ -97,61 +94,69 @@ function Item() {
                 marginTop: 10,
               }}
             >
-              <Text numberOfLines={3}>{data.description}</Text>
+              <Text numberOfLines={3} style={{ color: "#fff" }}>
+                {data.description}
+              </Text>
             </View>
-          </Wrapper>
+          </View>
           <ItemButtons data={data} />
         </View>
       </SafeAreaView>
-    </AnimatedContainer>
+    </Animated.View>
   );
 }
 
 const ItemMemo = React.memo(Item, () => {});
 export default ItemMemo;
 
-const Wrapper = styled.View`
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: 20px;
-  margin-horizontal: 10px;
-`;
-const Container = styled.View`
-  position: absolute;
-  background-color: #2b2c4c;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-`;
-const AnimatedContainer = Animated.createAnimatedComponent(Container);
-
-const Text = styled.Text`
-  color: #fff;
-  font-size: ${Math.round(screenWidth) >= 737 ? "24px" : "13px"};
-  font-style: italic;
-`;
-const Content = styled.View``;
-const ContainerClose = styled.View`
-  margin-top: 10px;
-  position: relative;
-  left: ${screenWidth - 50}px;
-`;
-
-const CloseView = styled.View`
-  width: 34px;
-  height: 34px;
-  background: #53565c;
-  justify-content: center;
-  align-items: center;
-  border-radius: 22px;
-`;
-
-const Image = styled.Image`
-  height: 250px;
-  padding: 0;
-  margin: 0;
-`;
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    backgroundColor: "#2b2c4c",
+    width: "100%",
+    height: "100%",
+    zIndex: 100,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  wrapper: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#2b2c4c",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  content: {
+    marginHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  closeView: {
+    width: 34,
+    height: 34,
+    backgroundColor: "#53565c",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 22,
+  },
+  image: {
+    height: "250px",
+    padding: 0,
+    margin: 0,
+  },
+  wrapperClose: {
+    marginTop: 10,
+    position: "relative",
+    left: screenWidth - 50,
+  },
+  image: {
+    height: 250,
+    padding: 0,
+    margin: 0,
+  },
+  text: {
+    color: "#fff",
+    fontSize: 24,
+    fontStyle: "italic",
+  },
+});

@@ -1,206 +1,137 @@
-import React, { useRef, useEffect, useCallback } from "react";
-import {
-  Text,
-  StatusBar,
-  Animated,
-  Dimensions,
-  ImageBackground,
-} from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import styled from "styled-components/native";
+import React, { useContext } from "react";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import FieldText from "../components/Fieldtext";
+import { AuthContext } from "../context/AuthProvider";
+import Button from "../components/common/Button";
 
-import LoadingSuccessAnimation from "./LoadingSuccessAnimtion";
-import moviePoster from "../assets/moviesposter.jpg";
-
-const ScreenHeight = Dimensions.get("screen").height;
-const ScreenWidth = Dimensions.get("screen").width;
-
-const AuthContext = React.createContext();
-
-export default function LoginScreen({ navigation, route }) {
-  const { setUserToken } = route.params;
-
-  const [iSignUp, setIsSignUp] = React.useState(false);
-
+export default function LoginScreen({ navigation }) {
   const [user, setUser] = React.useState({
-    email: "",
-    password: "",
-  });
-  const [active, setActive] = React.useState(false);
-  const [state, setState] = React.useState({
-    email: "",
-    password: "",
+    email: "test@example.com",
+    password: "12345678",
   });
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem("state");
+  const { login, isLoggedIn } = useContext(AuthContext);
 
-        if (value !== null) {
-          let data = JSON.parse(value);
-
-          const { email, password } = data;
-          setState({
-            email: email,
-            password: password,
-          });
-        }
-      } catch (e) {}
-    };
-    getData();
-  }, [active]);
-
-  const handleSignUp = () => {
-    setIsSignUp(true);
-  };
   const onChangeText = (name) => {
     return (text) => {
       setUser({ ...user, [name]: text });
     };
   };
-  const hanldeSubmit = () => {
-    const { email, password } = user;
 
-    if (email === state.email && password === state.password) {
-      setActive(true);
+  const handleSignupPress = () => {
+    navigation.navigate("SignUp");
+  };
+
+  const handleLoginPress = async () => {
+    console.log(user);
+    try {
+      const data = await login(user.email, user.password);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-
-    setTimeout(() => {
-      if (email === state.email && password === state.password) {
-        setUserToken("token");
-        setActive(false);
-      }
-    }, 200);
   };
 
   return (
-    <Container>
-      <ImageBackground
-        source={moviePoster}
-        style={{ width: ScreenWidth, height: 400 }}
-      />
-      <Wrapper>
-        <Form
-          style={{
-            transform: [{ translateY: ScreenHeight / 5 }],
-            paddingHorizontal: 10,
-            flexDirection: "column",
-          }}
+    <View style={styles.container}>
+      <Text
+        style={[
+          styles.title,
+          styles.marginBottom,
+          { color: styles.color.secondary },
+        ]}
+      >
+        login
+      </Text>
+      <View style={styles.wrapper}>
+        <Text style={[styles.label, { color: styles.color.secondary }]}>
+          Email :
+        </Text>
+        <FieldText
+          name="email"
+          onChangeText={onChangeText("email")}
+          value={user.email}
+          onSubmitEditing={() => handleSubmit()}
+          defaultValue={user.email}
+        />
+
+        <Text style={[styles.label, { color: styles.color.secondary }]}>
+          Password :
+        </Text>
+        <FieldText
+          name="password"
+          onChangeText={onChangeText("password")}
+          value={user.password}
+          onSubmitEditing={() => handleSubmit()}
+          secureTextEntry={true}
+          defaultValue={user.password}
+        />
+        <Text
+          style={[{ textAlign: "center" }, { color: styles.color.secondary }]}
         >
-          <Text
-            style={{
-              color: "#b6b133",
-              fontSize: 18,
-              padding: 5,
-              fontWeight: "bold",
-              justifyContent: "center",
-            }}
-          >
-            Login
-          </Text>
-          <Text
-            style={{
-              color: "#b6b133",
-              fontSize: 18,
-              padding: 5,
-            }}
-          >
-            Email :
-          </Text>
-          <Input
-            name="email"
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={onChangeText("email")}
-            value={user.email}
-            onSubmitEditing={() => hanldeSubmit()}
-          />
-
-          <Text
-            style={{
-              color: "#b6b133",
-              fontSize: 18,
-              padding: 5,
-            }}
-          >
-            Password :
-          </Text>
-          <Input
-            name="password"
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={onChangeText("password")}
-            value={user.password}
-            onSubmitEditing={() => hanldeSubmit()}
-            secureTextEntry={true}
-            defaultValue={user.password}
-          />
-
-          <TouchableOpacity onPress={() => hanldeSubmit()}>
-            <WrapperButton>
-              <ButtonLogin>Login</ButtonLogin>
-            </WrapperButton>
+          Forgot your password ?
+        </Text>
+        <View style={styles.wrapperButton}>
+          <TouchableOpacity onPress={() => handleLoginPress()}>
+            <Button text="Login" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleSignUp()}>
-            <WrapperButton>
-              <ButtonSignUp>Sign Up</ButtonSignUp>
-            </WrapperButton>
+
+          <TouchableOpacity onPress={() => handleSignupPress()}>
+            <Button text="Sign up" />
           </TouchableOpacity>
-        </Form>
-        {active && <LoadingSuccessAnimation active={active} />}
-      </Wrapper>
-      <StatusBar backgroundColor="#383958" barStyle="auto" />
-    </Container>
+        </View>
+      </View>
+    </View>
   );
 }
-const Wrapper = styled.View`
-  position: absolute;
-  z-index: 100;
-  width: 100%;
-  height: 100%;
 
-`;
-const Container = styled.View`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  background-color: #383958;
-`;
-const Form = styled.View`
-  flex: 2;
-  background-color: #24243c;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  padding-top: 40px;
-`;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#383958",
+    justifyContent: "center",
+  },
+  wrapper: {
+    gap: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
+  },
+  label: { fontSize: 18, padding: 5, fontWeight: "bold" },
+  title: {
+    textAlign: "center",
+    fontSize: 27,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
+  marginBottom: {
+    marginBottom: 50,
+  },
+  wrapperButton: {
+    paddingTop: 20,
+    gap: 20,
+  },
+  ButtonSignUp: {
+    borderRadius: 10,
+    backgroundColor: "#383958",
+    height: 40,
+    textAlign: "center",
+    alignItems: "center",
+    padding: 10,
+    fontSize: 16,
+    color: "#fff",
+  },
+  color: {
+    main: "#383958",
+    primary: "#fff",
+    secondary: "#b6b133",
+    black: "#333",
+  },
 
-const Input = styled.TextInput`
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px;
-`;
-
-const ButtonLogin = styled.Text`
-  border-radius: 10px;
-  background-color: #b6b133;
-  color: #fff;
-  height: 40px;
-  text-align: center;
-  align-items: center;
-  padding: 10px;
-  font-size: 16px;
-`;
-const ButtonSignUp = styled.Text`
-  border-radius: 10px;
-  background-color: #383958;
-  height: 40px;
-  text-align: center;
-  align-items: center;
-  padding: 10px;
-  font-size: 16px;
-  color: #fff;
-`;
-const WrapperButton = styled.View`
-  padding-top: 16px;
-`;
+  input: {
+    borderRadius: 10,
+    padding: 10,
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+  },
+});

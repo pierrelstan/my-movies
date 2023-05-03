@@ -1,9 +1,9 @@
-import WebAPI from '../../assets/ServicesAxios/service';
+import WebAPI from "../../utils/ServicesAxios/service";
 import {
   LOADING_UPCOMING_MOVIES_START,
   LOADING_UPCOMING_MOVIES_FAILURE,
   GET_UPCOMING_MOVIES_SUCCESS,
-} from '../types/types';
+} from "../types/types";
 
 export function getUpcomingMovies(page = 0) {
   return function (dispatch) {

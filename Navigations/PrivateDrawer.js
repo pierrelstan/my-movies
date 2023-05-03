@@ -16,7 +16,7 @@ const PrivateDrawerNavigator = () => {
         drawerLabelStyle: {
           fontSize: 15,
         },
-        drawerActiveTintColor: "#fff",
+        drawerActiveTintColor: "#b6b133",
         drawerInactiveTintColor: "#fff",
       }}
     >

@@ -1,48 +1,33 @@
-import React, { useCallback, useContext, useState } from "react";
-import { Pressable, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import styled from "styled-components";
 import { MaterialIcons } from "@expo/vector-icons";
 import AppContext from "../context/AppContext";
 
 const DisplayListColor = (props) => {
   const { favorites, setFavorites } = useContext(AppContext);
 
-        console.log(
-          favorites.favorites.filter((favId) => {
-            return favId !== props.data;
-          })
-        );
-        const handleToggleFavorite = (data) => {
-          // console.log(data);
-          if (favorites.favorites.includes(data.id)) {
-            setFavorites({
-              favorites: favorites.favorites.filter(
-                (favId) => favId !== data.id
-              ),
-              ids: favorites.ids.filter((id) => id !== data.id),
-            });
-          } else {
-            setFavorites({
-              favorites: [...favorites.favorites, data.id],
-              ids: [...favorites.ids, data.id],
-            });
-          }
-        };
+  const handleToggleFavorite = (data) => {
+    if (favorites.favorites.includes(data.id)) {
+      setFavorites({
+        favorites: favorites.favorites.filter((favId) => favId !== data.id),
+      });
+    } else {
+      setFavorites({
+        favorites: [...favorites.favorites, data.id],
+      });
+    }
+  };
 
-  const icons = favorites.ids.includes(props.data.id)
+  const icons = favorites.favorites.includes(props.data.id)
     ? "favorite"
     : "favorite-border";
 
   return (
-    <ContainerIconsPlus>
-      <Pressable onPress={() => handleToggleFavorite(props.data)}>
-        <WrapperIconsPlus>
-          <MaterialIcons name={icons} size={24} color="red" />
-        </WrapperIconsPlus>
-      </Pressable>
-    </ContainerIconsPlus>
+    <Pressable onPress={() => handleToggleFavorite(props.data)}>
+      <MaterialIcons name={icons} size={24} color="red" />
+    </Pressable>
   );
 };
 
@@ -54,45 +39,34 @@ function ItemButtons({ data }) {
   };
 
   return (
-    <Container>
-      <WrapperIcons>
+    <View style={styles.container}>
+      <View style={styles.wrapperIcons}>
         <TouchableOpacity onPress={() => handlePreviewVideo(data.id)}>
           <Feather name="play" size={24} color="#fff" />
         </TouchableOpacity>
 
-        <ContainerIcons>
+        <View style={styles.icons}>
           <DisplayListColor data={data} />
-        </ContainerIcons>
-      </WrapperIcons>
-    </Container>
+        </View>
+      </View>
+    </View>
   );
 }
 
 export default ItemButtons;
 
-const Container = styled.View`
-  margin-top: 40px;
-`;
-const ContainerIconsPlus = styled.View``;
-const WrapperIconsPlus = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
-const WrapperIcons = styled.View`
-  margin-top: 8px;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-`;
-
-const ButtonText = styled.Text`
-  color: #fff;
-`;
-
-const TextIcon = styled.Text`
-  color: #fff;
-`;
-const ContainerIcons = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 40,
+  },
+  icons: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  wrapperIcons: {
+    marginTop: 8,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+});
