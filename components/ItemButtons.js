@@ -9,23 +9,16 @@ const DisplayListColor = (props) => {
 	const { favorites, setFavorites } = useContext(FavoritesContext);
 
 	const handleToggleFavorite = (data) => {
-		if (favorites.favorites.includes(data.id)) {
-			let filter = favorites.favorites.filter((favId) => favId !== data.id);
-
-			setFavorites({
-				favorites: filter
-			});
+		if (favorites.includes(data)) {
+			let filter = favorites.filter((item) => item.id !== data.id);
+			setFavorites(filter);
 		} else {
-			setFavorites({
-				favorites: [...favorites.favorites, data.id]
-			});
+			setFavorites(favorites.concat(data));
 		}
 	};
+	console.log(favorites);
 
-	const icons = favorites.favorites.includes(props.data.id)
-		? "favorite"
-		: "favorite-border";
-
+	const icons = favorites.includes(props.data) ? "favorite" : "favorite-border";
 	return (
 		<Pressable onPress={() => handleToggleFavorite(props.data)}>
 			<MaterialIcons name={icons} size={24} color="red" />

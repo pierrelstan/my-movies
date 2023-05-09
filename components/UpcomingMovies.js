@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { View } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import renderItem from "./RenderItem";
 import { getUpcomingMovies } from "../redux/actions/upcomingMoviesAction";
 import axiosService from "../utils/ServicesAxios/axiosService";
 import MoviesSkeleton from "./MoviesSkeleton";
+import renderItem from "./RenderItem";
 import List from "./common/List";
 import Title from "./common/Title";
+import React, { useEffect } from "react";
+import { View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function UpcomingMovies() {
 	const dispatch = useDispatch();

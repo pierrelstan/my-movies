@@ -1,14 +1,11 @@
-import React from 'react';
-import { View } from 'react-native';
-import {
-  createStackNavigator,
-  HeaderBackButton,
-} from '@react-navigation/stack';
-import { useFonts } from 'expo-font';
+import MyList from '../screens/FavoritesScreen';
 import MovieScreen from '../screens/MovieScreen';
-import SearchMoviesScreen from '../screens/SearchMoviesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import MyList from '../screens/MyListScreen';
+import SearchMoviesScreen from '../screens/SearchMoviesScreen';
+import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
+import { useFonts } from 'expo-font';
+import React from "react";
+import { View } from "react-native";
 
 const Stack = createStackNavigator();
 
