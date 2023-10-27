@@ -13,7 +13,7 @@
 
 &nbsp;
 # Description:
-Lo-movie is a movie app that users can watch movies.
+My Movies is an app for movie lovers who want to keep track of the latest movie trailers.
 
 The main functionalities of the app are:
 - Sign In
